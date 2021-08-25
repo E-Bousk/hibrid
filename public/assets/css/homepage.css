@@ -1,0 +1,23 @@
+.carousel-caption > h1,
+.carousel-caption > p {
+  color: white;
+  text-shadow: 1px 1px 1px black;
+}
+
+.carousel-indicators > button {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50%;
+}
+
+article img,
+.carousel-item img,
+.reference img:hover {
+  transition: transform 0.3s ease-out;
+}
+
+article img:hover,
+.carousel-item img:hover,
+.reference img:hover {
+  transform: scale(1.075);
+}
