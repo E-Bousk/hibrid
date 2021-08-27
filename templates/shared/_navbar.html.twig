@@ -8,7 +8,7 @@
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarColor">
-			<ul class="navbar-nav ms-auto">
+			<ul class="navbar-nav me-auto">
 				<li class="nav-item">
 					<a class="nav-link" href="#">Évènement pro</a>
 				</li>
@@ -24,7 +24,15 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#">Voir les disponibilités</a>
 				</li>
-			</ul>
-		</div>
+			</ul> {# end of 'navbar-nav' #}
+			<ul class="navbar-nav">
+                {% if app.user %}
+                    <li class="nav-item"><a href="{{ path("security_logout") }}" class="btn btn-danger">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a href="#" class="nav-link">Inscription</a></li>
+                    <li class="nav-item"><a href="{{ path("security_login") }}" class="btn btn-success">Login</a></li>
+                {% endif %}
+			</ul> {# end of 'navbar-nav' #}
+		</div> {# end of 'navbar-collapse' #}
 	</div>
 </nav>

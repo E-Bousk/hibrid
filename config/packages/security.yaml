@@ -1,6 +1,10 @@
 security:
     # https://symfony.com/doc/current/security/experimental_authenticators.html
-    enable_authenticator_manager: true
+
+    # !! désactivé pour utiliser l'ancien 'LoginFormAuthenticator' !!
+    # enable_authenticator_manager: true 
+    # !! désactivé pour utiliser l'ancien 'LoginFormAuthenticator' !!
+
     # https://symfony.com/doc/current/security.html#c-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
@@ -19,14 +23,32 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            # !! désactivé pour utiliser l'ancien 'LoginFormAuthenticator' !!
+            # anonymous: lazy
+            # !! désactivé pour utiliser l'ancien 'LoginFormAuthenticator' !!
+            #  à la place de :
+            anonymous: true
             lazy: true
+            
             provider: app_user_provider
+
+            # !! désactivé pour utiliser l'ancien 'LoginFormAuthenticator' !!
+            # custom_authenticator: App\Security\LoginFormAuthenticator
+            # !! désactivé pour utiliser l'ancien 'LoginFormAuthenticator' !!
+            #  à la place de :
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
+
+            logout:
+                path: security_logout
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

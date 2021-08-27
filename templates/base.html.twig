@@ -20,10 +20,10 @@
 	<body>
 		{% include "shared/_navbar.html.twig" %}
 
-		<main role="main" class="container"> {% block body %}{% endblock %}
-			</main>
+		<main role="main" class="container">
+			{% block body %}{% endblock %}
+		</main>
 
-			{% include "shared/_footer.html.twig" %}
-
-		</body>
-	</html>
+		{% include "shared/_footer.html.twig" %}
+	</body>
+</html>
