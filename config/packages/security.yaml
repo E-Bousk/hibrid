@@ -23,22 +23,22 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            anonymous: true
+            lazy: true
+            #  à la place de :
             # !! désactivé pour utiliser l'ancien 'LoginFormAuthenticator' !!
             # anonymous: lazy
             # !! désactivé pour utiliser l'ancien 'LoginFormAuthenticator' !!
-            #  à la place de :
-            anonymous: true
-            lazy: true
             
             provider: app_user_provider
 
-            # !! désactivé pour utiliser l'ancien 'LoginFormAuthenticator' !!
-            # custom_authenticator: App\Security\LoginFormAuthenticator
-            # !! désactivé pour utiliser l'ancien 'LoginFormAuthenticator' !!
-            #  à la place de :
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
+            #  à la place de :
+            # !! désactivé pour utiliser l'ancien 'LoginFormAuthenticator' !!
+            # custom_authenticator: App\Security\LoginFormAuthenticator
+            # !! désactivé pour utiliser l'ancien 'LoginFormAuthenticator' !!
 
 
             # activate different ways to authenticate

@@ -19,9 +19,4 @@ class HomeController extends AbstractController
         /* CREATE VIEW */
         return $this->render('home/home.html.twig');
     }
-
-
-    #[Route('/logout', name: 'security_logout')]
-    public function logout() {
-    }
 }
