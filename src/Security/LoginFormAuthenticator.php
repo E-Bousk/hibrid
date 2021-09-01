@@ -95,7 +95,16 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
 
 
 
-// nouvelle version :
+
+
+
+
+
+
+
+
+
+// version Symfony 5.3 :
 // <?php
 
 // namespace App\Security;

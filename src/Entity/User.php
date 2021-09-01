@@ -4,11 +4,13 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="Cette adresse email est déjà utilisée")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -61,9 +63,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $address;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    private $isVerified;
+    private $isVerified = false;
 
     public function getId(): ?int
     {
@@ -214,15 +216,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getIsVerified(): ?bool
-    {
-        return $this->isVerified;
-    }
-
     public function setIsVerified(?bool $isVerified): self
     {
         $this->isVerified = $isVerified;
 
         return $this;
     }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    /**
+     * 
+     * Return firstName and lastName of User
+     *
+     */
+    public function getFullName(): ?string
+    {
+        return $this->getfirstName() . ' ' . $this->getlastName();
+    }
+
 }

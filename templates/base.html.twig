@@ -9,8 +9,9 @@
 			{% endblock %}
 		</title>
 
-		{% block stylesheets %}
 			<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+			<link rel="stylesheet" href="assets/css/main.css">
+		{% block stylesheets %}
 		{% endblock %}
 
 		{% block javascripts %}
@@ -18,7 +19,8 @@
 		{% endblock %}
 	</head>
 	<body>
-		{% include "shared/_navbar.html.twig" %}
+		{{ include('shared/_flash_messages.html.twig') }}
+		{{ include('shared/_navbar.html.twig') }}
 
 		<main role="main" class="container">
 			{% block body %}{% endblock %}
