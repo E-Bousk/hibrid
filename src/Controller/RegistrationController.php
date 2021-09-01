@@ -14,6 +14,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
@@ -30,10 +31,10 @@ class RegistrationController extends AbstractController
     {
 
         /* don't show this registration page if user is already connected */
-        if ($this->getUser()) {
-            $this->addFlash('error', 'Vous êtes dejà connecté !');
-            return $this->redirectToRoute('homepage');
-        }
+        // if ($this->getUser()) {
+        //     $this->addFlash('error', 'Vous êtes dejà connecté !');
+        //     return $this->redirectToRoute('homepage');
+        // }
 
         /* create a new objet to fill it with form */
         $user = new User;
@@ -82,7 +83,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request): Response
+    public function verifyUserEmail(Request $request, TranslatorInterface $translator ): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -90,7 +91,8 @@ class RegistrationController extends AbstractController
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $exception->getReason());
+            /* use 'TranslatorInterface' to get translation in French (with 'messages.fr.yaml) */
+            $this->addFlash('verify_email_error', $translator->trans($exception->getReason()));
 
             return $this->redirectToRoute('app_register');
         }

@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -18,11 +19,13 @@ use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 class LoginFormAuthenticator extends AbstractGuardAuthenticator
 {
     protected $encoder;
+    protected $flashBag;
 
     /* will be use on 'checkCredentials' method to hash and verify wordpass */
-    public function __construct(UserPasswordHasherInterface $encoder)
+    public function __construct(UserPasswordHasherInterface $encoder, FlashBagInterface $flashBag)
     {
        $this->encoder= $encoder;
+       $this->flashBag= $flashBag;
     }
     
     public function supports(Request $request)
@@ -83,6 +86,7 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
     public function start(Request $request, AuthenticationException $authException = null)
     {
         /* on failure, go back to login page */
+        $this->flashBag->add('error', "Vous devez d'abord vous connecter");
         return new RedirectResponse('/login');
     }
 

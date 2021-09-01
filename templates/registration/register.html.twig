@@ -5,6 +5,9 @@
 {% block body %}
 <div class="row">
     <div class="col-md-6 mx-auto">
+        {% for flashError in app.flashes('verify_email_error') %}
+            <div class="alert alert-error rounded mb-3" role="alert">{{ flashError }}</div>
+        {% endfor %}
         <h1 class="my-5 text-center">Créer un compte</h1>
 
         {# {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }} #}
@@ -38,10 +41,8 @@
 </div>
 
 
-    {# {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-error rounded mb-3" role="alert">{{ flashError }}</div>
-    {% endfor %}
 
+   {#
     <h1>Créer un compte</h1>
 
     {{ form_start(registrationForm) }}
