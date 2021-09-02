@@ -18,3 +18,9 @@
   .alert-info {
     background-color: blue;
   }   
+
+  .badge-danger {
+    background-color: #dc3545;
+    margin-bottom: .2rem;
+    padding-top: .3rem;
+  }

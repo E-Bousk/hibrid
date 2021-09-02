@@ -2,11 +2,15 @@
 
 namespace App\Security;
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -18,14 +22,22 @@ use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 class LoginFormAuthenticator extends AbstractGuardAuthenticator
 {
+    use TargetPathTrait;
+
+    public const LOGIN_ROUTE = 'security_login';
+
     protected $encoder;
     protected $flashBag;
+    protected $entityManager;
+    protected $urlGenerator;
 
     /* will be use on 'checkCredentials' method to hash and verify wordpass */
-    public function __construct(UserPasswordHasherInterface $encoder, FlashBagInterface $flashBag)
+    public function __construct(UserPasswordHasherInterface $encoder, UrlGeneratorInterface $urlGenerator, FlashBagInterface $flashBag, EntityManagerInterface $entityManager)
     {
        $this->encoder= $encoder;
        $this->flashBag= $flashBag;
+       $this->entityManager= $entityManager;
+       $this->urlGenerator= $urlGenerator;
     }
     
     public function supports(Request $request)
@@ -79,8 +91,16 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
-        /* on success, go to homepage */
-        return new RedirectResponse('/');
+        // /* on success, go to homepage */
+        // return new RedirectResponse('/');
+        $user= $this->entityManager->getRepository(User::class)->findOneBy(['email' => $token->getUser()->getUsername()]);
+        $this->flashBag->add('success', 'Welcome ' . $user->getFullName());
+
+        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+            return new RedirectResponse($targetPath);
+        }
+
+        return new RedirectResponse($this->urlGenerator->generate('homepage'));
     }
 
     public function start(Request $request, AuthenticationException $authException = null)

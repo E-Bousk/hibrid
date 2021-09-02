@@ -13,11 +13,11 @@ class SecurityController extends AbstractController
     #[Route('/login', name: 'security_login')]
     public function login(AuthenticationUtils $utils): Response
     {
-        // $userLoggin = $this->getUser();
+        $userLoggin = $this->getUser();
 
-        // if ($userLoggin) {
-        //     return $this->redirectToRoute('home_index');
-        // }
+        if ($userLoggin) {
+            return $this->redirectToRoute('homepage');
+        }
 
         /* to create the form to login (and on error, keep the email on the inputform) */
         $form = $this->createForm(LoginType::class, ['email' => $utils->getLastUsername()]);
