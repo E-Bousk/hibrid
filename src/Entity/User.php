@@ -9,6 +9,10 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * Class User | file User.php
+ *
+ * In this class, we create the entity USER
+ *
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="Cette adresse email est déjà utilisée")
  */
@@ -48,12 +52,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $lastName;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $telephone1;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $telephone2;
 
@@ -180,24 +184,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getTelephone1(): ?int
+    public function getTelephone1(): ?string
     {
         return $this->telephone1;
     }
 
-    public function setTelephone1(?int $telephone1): self
+    public function setTelephone1(?string $telephone1): self
     {
         $this->telephone1 = $telephone1;
 
         return $this;
     }
 
-    public function getTelephone2(): ?int
+    public function getTelephone2(): ?string
     {
         return $this->telephone2;
     }
 
-    public function setTelephone2(?int $telephone2): self
+    public function setTelephone2(?string $telephone2): self
     {
         $this->telephone2 = $telephone2;
 

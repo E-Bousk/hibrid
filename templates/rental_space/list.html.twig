@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Listing des espaces locatifs' %}
+
+{% block body %}
+    <h1 class="my-3" >Listing des espaces locatifs</h1>
+
+    <table id="datatable" class="table">
+        <thead>
+            <tr>
+                <th>Designation</th>
+                <th>Ville</th>
+                <th>Quantité</th>
+                <th>Durée minimale</th>
+                <th>Durée maximale</th>
+                <th>Tarif journalier</th>
+                <th>Tarif semaine</th>
+                <th>Tarif Weekend</th>
+                <th>Tarif mois</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rental_space in rental_spaces %}
+            <tr>
+                <td>{{ rental_space.rentalSpaceType }}</td>
+                <td>{{ rental_space.city }}</td>
+                <td>{{ rental_space.quantity }}</td>
+                <td>{{ rental_space.minimumDurationRule }} heures</td>
+                <td>{{ rental_space.maximumDurationRule }} heures</td>
+                <td>{{ rental_space.dayPrice }} &euro;</td>
+                <td>{{ rental_space.weekPrice }} &euro;</td>
+                <td>{{ rental_space.weekendPrice }} &euro;</td>
+                <td>{{ rental_space.monthPrice }} &euro;</td>
+                <td>
+                    {# <a href="{{ path('rental_space_edit', {'id': rental_space.id}) }}">éditer</a>
+                    <a href="{{ path('rental_space_delete', {'id': rental_space.id}) }}">supprimer</a> #}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">Aucun lieu pour le moment !&emsp;<a href="{{ path('rental_space_add') }}">Créer un espace</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('rental_space_add') }}">Ajouter un nouvel espace</a>
+
+
+{% endblock %}

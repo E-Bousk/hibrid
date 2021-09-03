@@ -17,6 +17,16 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
+/**
+ * Class RegistrationController | file RegistrationController.php
+ *
+ * In this class, we have method for :
+ *
+ * Displaying the registration page
+ * Registering
+ * Verifiying email
+ * 
+ */
 class RegistrationController extends AbstractController
 {
     private $emailVerifier;
@@ -26,26 +36,26 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
+    /**
+     * Registration page
+     */
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
 
-        /* don't show this registration page if user is already connected */
+        // don't show this registration page if user is already connected
         // if ($this->getUser()) {
         //     $this->addFlash('error', 'Vous êtes dejà connecté !');
         //     return $this->redirectToRoute('homepage');
         // }
 
-        /* create a new objet to fill it with form */
         $user = new User;
-        /* create a form */
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        /* verify if form is submitted and correctly filled */
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // encode the plain password
             $user->setPassword(
                 $passwordEncoder->hashPassword(
                     $user,
@@ -53,7 +63,7 @@ class RegistrationController extends AbstractController
                     )
                 );
 
-            /* shortcut 'getDoctrine' comes form 'AbstractController' which has been extended */
+            // the 'getDoctrine' shortcut comes form 'AbstractController' which has been extended
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -66,7 +76,6 @@ class RegistrationController extends AbstractController
                     ->subject('Merci de confirmer votre adressse Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -76,12 +85,14 @@ class RegistrationController extends AbstractController
             );
         }
 
-        /* template to display the form created */
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
 
+    /**
+     * Verify email page
+     */
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator ): Response
     {
@@ -91,7 +102,7 @@ class RegistrationController extends AbstractController
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
-            /* use 'TranslatorInterface' to get translation in French (with 'messages.fr.yaml) */
+            // use 'TranslatorInterface' to get translation in French (with 'messages.fr.yaml)
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason()));
 
             return $this->redirectToRoute('app_register');

@@ -14,20 +14,24 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Validator\Constraints\Email;
 
+/**
+ * Class RegistrationFormType | file RegistrationFormType.php
+ *
+ * This class is used to create form for the registration page
+ * In this class, we have methods for :
+ *
+ * Building the form to send it to view
+ * Associating the form with an entity
+ * 
+ */
 class RegistrationFormType extends AbstractType
 {
+    /**
+     * build the form : add label, constraints, placeholder etc...
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // ->add('agreeTerms', CheckboxType::class, [
-            //     'mapped' => false,
-            //     'constraints' => [
-            //         new IsTrue([
-            //             'message' => "Veuillez accepter les conditions d'utilisation",
-            //         ]),
-            //     ],
-            //     'label' => "J'accepte les conditions d'utilisation"
-            // ])
             ->add('email', EmailType::class, [
                 'label' => 'Adresse email :',
                 'attr' => [
@@ -108,9 +112,11 @@ class RegistrationFormType extends AbstractType
         ;
     }
 
+    /**
+     * Associate the form with USER entity
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        /* this form is associated with entity USER */
         $resolver->setDefaults([
             'data_class' => User::class,
         ]);

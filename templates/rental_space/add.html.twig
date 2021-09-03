@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RentalSpace{% endblock %}
+
+{% block body %}
+    <h1>Create new RentalSpace</h1>
+
+    {{ include('rental_space/_form.html.twig') }}
+
+    <a href="{{ path('rental_space_list') }}">Retourner au listing</a>
+{% endblock %}

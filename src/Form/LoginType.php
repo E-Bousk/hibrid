@@ -8,8 +8,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
+/**
+ * Class LoginType | file LoginType.php
+ *
+ * This class is used to create form for the login page
+ * In this class, we have methods for :
+ *
+ * Building the form to send it to view
+ * Adding options if needed (associate with entity for exemple)
+ * 
+ */
 class LoginType extends AbstractType
 {
+    /**
+     * build the form : add label, constraints, placeholder etc...
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -28,6 +41,9 @@ class LoginType extends AbstractType
             ]);
     }
 
+    /**
+     * No option here
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

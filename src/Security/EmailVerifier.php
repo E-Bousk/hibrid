@@ -10,6 +10,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
+/**
+ * Class EmailVerifier | file EmailVerifier.php
+ *
+ * This class is used to send a confirmation email to verify it
+ * In this class, we have methods for :
+ *
+ * sending an email confirmation
+ * Adding options if needed (associate with entity for exemple)
+ * 
+ */
 class EmailVerifier
 {
     private $verifyEmailHelper;

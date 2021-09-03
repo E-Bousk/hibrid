@@ -9,13 +9,13 @@
 			{% endblock %}
 		</title>
 
-			<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-			<link rel="stylesheet" href="assets/css/main.css">
+			<link rel="stylesheet" href="{{ path('homepage') }}assets/css/bootstrap.min.css">
+			<link rel="stylesheet" href="{{ path('homepage') }}assets/css/main.css">
 		{% block stylesheets %}
 		{% endblock %}
 
 		{% block javascripts %}
-			<script src="assets/js/bootstrap.bundle.min.js"></script>
+			<script src="{{ path('homepage') }}assets/js/bootstrap.bundle.min.js"></script>
 		{% endblock %}
 	</head>
 	<body>
