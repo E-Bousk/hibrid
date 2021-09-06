@@ -1,26 +1,30 @@
-.alert {
-    padding: 10px;
-    color: white;
-    text-align: center;
-    margin: 0;
-    border: none;
-    border-radius: 0;
-  }
-  
-  .alert-success {
-    background-color: green;
-  }
-  
-  .alert-error {
-    background-color: red;
-  }
-  
-  .alert-info {
-    background-color: blue;
-  }   
+.gap {
+  height: 7rem;
+}
 
-  .badge-danger {
-    background-color: #dc3545;
-    margin-bottom: .2rem;
-    padding-top: .3rem;
-  }
+.alert {
+  padding: 10px;
+  color: white;
+  text-align: center;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+}
+  
+.alert-success {
+  background-color: green;
+}
+  
+.alert-error {
+  background-color: red;
+}
+
+.alert-info {
+  background-color: blue;
+}   
+
+.badge-danger {
+  background-color: #dc3545;
+  margin-bottom: .2rem;
+  padding-top: .3rem;
+}

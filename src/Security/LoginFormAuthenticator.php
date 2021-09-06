@@ -20,6 +20,19 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
+/**
+ * Class LoginFormAuthenticator | file LoginFormAuthenticator.php
+ *
+ * In this class, we have method for :
+ *
+ * Checking if authentication is needed
+ * Getting credential from request
+ * Checking if user exist
+ * Checking if password is correct
+ * What to do on error
+ * What to do on success
+ * 
+ */
 class LoginFormAuthenticator extends AbstractGuardAuthenticator
 {
     use TargetPathTrait;
@@ -31,8 +44,17 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
     protected $entityManager;
     protected $urlGenerator;
 
-    /* will be use on 'checkCredentials' method to hash and verify wordpass */
-    public function __construct(UserPasswordHasherInterface $encoder, UrlGeneratorInterface $urlGenerator, FlashBagInterface $flashBag, EntityManagerInterface $entityManager)
+    /**
+     * Set $encoder will be use on 'checkCredentials' method to hash and verify wordpass
+     * Set $urlGenerator to create URL
+     * Set $flashBag to create error messages
+     * Set $entityManager to get User entity
+     */
+    public function __construct(
+                                UserPasswordHasherInterface $encoder, 
+                                UrlGeneratorInterface $urlGenerator,
+                                FlashBagInterface $flashBag,
+                                EntityManagerInterface $entityManager)
     {
        $this->encoder= $encoder;
        $this->flashBag= $flashBag;
@@ -40,6 +62,9 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
        $this->urlGenerator= $urlGenerator;
     }
     
+    /**
+     * Check if authentication is needed or not
+     */
     public function supports(Request $request)
     {
         /* check if the route is 'security_login' with POST method */
@@ -48,6 +73,9 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
         /* go to next method if return = true */
     }
 
+    /**
+     * Get credential from request
+     */
     public function getCredentials(Request $request)
     {
         /* get array with email, password and CSRF token */
@@ -55,6 +83,9 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
         /* on success, send this array to next method */
     }
 
+    /**
+     * Check if user exist
+     */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         /* check (with email) if the user exist on 'user' entity ($userProvider is configured in 'security.yaml' with 'app_user_provider') */
@@ -67,6 +98,9 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
         /* on success, send the User to next method */
     }
 
+    /**
+     * Check if password is the right one
+     */
     public function checkCredentials($credentials, UserInterface $user)
     {
         /* check if the password is the same on database : need to encode the password first */
@@ -79,7 +113,9 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
         /* when 'true' is return : authentication is done and OK */
     }
 
-    /* whenever a previous method failed, exception will arrive here */
+    /**
+     * Whenever a previous method failed, exception will arrive here
+     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         /* get the email to keep it on the inputform (on 'createForm' method, used on 'SecurityController's 'login' method) */
@@ -89,6 +125,9 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
         $request->attributes->set(Security::AUTHENTICATION_ERROR, $exception);
     }
 
+    /**
+     * What to do on success
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
         // /* on success, go to homepage */

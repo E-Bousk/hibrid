@@ -18,17 +18,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * Home page
+     * Set path for homepage
+     * Create view to display the homepage
      */
     #[Route('/', name: 'homepage')]
     public function index(): Response
     {
-        // /* CHECK LOGGIN */
-        // if (!$this->getUser()) {
-        //     return $this->redirectToRoute('security_login');
-        // }
-
-        /* CREATE VIEW */
         return $this->render('home/home.html.twig');
     }
 }

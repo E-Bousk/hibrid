@@ -15,13 +15,12 @@
     
     <div class="col-8 col-md-6">
 
-        <h1 class="mt-5 mb-3">Connexion</h1>
+        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Connexion</h1>
 
         {# show error message if exist #}
         {% if error %}
             <div class="alert alert-error rounded mb-3">
                 {{ error.message }}
-                {# {{ error.messageKey | trans(error.messagedata, 'messages') }} #}
             </div>
         {% endif %}
 

@@ -14,14 +14,15 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
  * In this class, we have method for :
  *
  * Displaying the login page
- * Login
+ * Create the login form
  * Logout
  * 
  */
 class SecurityController extends AbstractController
 {
     /**
-     * Login page
+     * Set the path
+     * Create the login form and the view for the Login Page
      */
     #[Route('/login', name: 'security_login')]
     public function login(AuthenticationUtils $utils): Response
@@ -41,7 +42,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * Logout
+     * Set the path for Logout
      */
     #[Route('/logout', name: 'security_logout')]
     public function logout() {

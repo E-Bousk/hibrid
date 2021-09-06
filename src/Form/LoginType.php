@@ -21,7 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 class LoginType extends AbstractType
 {
     /**
-     * build the form : add label, constraints, placeholder etc...
+     * build the form : add label, placeholder etc...
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

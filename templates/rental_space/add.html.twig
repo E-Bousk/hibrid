@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New RentalSpace{% endblock %}
+{% block title %}Nouvel espace locatif{% endblock %}
 
 {% block body %}
-    <h1>Create new RentalSpace</h1>
+<div class="row">
+    <div class="col-md-6 mx-auto">
+         <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Ajouter un nouvel espace locatif</h1>
 
-    {{ include('rental_space/_form.html.twig') }}
-
-    <a href="{{ path('rental_space_list') }}">Retourner au listing</a>
+        {{ include('rental_space/_form.html.twig') }}
+        <div class="mb-5">      
+            <a href="{{ path('rental_space_list') }}">Retourner au listing</a>
+        </div>
+        <div class="gap">
+        </div>
+    </div>
+</div>
 {% endblock %}

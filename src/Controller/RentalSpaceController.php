@@ -15,10 +15,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  *
  * In this class, we have method for :
  *
- * Displaying the rental space management page
- * create a new rental space
- * edit existing rental space
- * delete existing rental space
+ * Creating a new rental space
+ * Reading (displaying) the rental space management page
+ * Updating (editing) existing rental space
+ * Deleting existing rental space
  * 
  */
 #[Route('admin/gestion/espaces')]
@@ -57,7 +57,7 @@ class RentalSpaceController extends AbstractController
             $entityManager->persist($rentalSpace);
             $entityManager->flush();
 
-            return $this->redirectToRoute('rental_space_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('rental_space_add', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('rental_space/add.html.twig', [
