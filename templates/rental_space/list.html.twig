@@ -43,10 +43,8 @@
                 <td>{{ rental_space.weekendPrice }}&nbsp;&euro;</td>
                 <td>{{ rental_space.monthPrice }}&nbsp;&euro;</td>
                 <td>
-                    <a href="#"><i class="far fa-2x fa-edit"></i></a>
-                    <a href="#"><i class="far fa-2x fa-trash-alt"></i></a>
-                    {# <a href="{{ path('rental_space_edit', {'id': rental_space.id}) }}">éditer</a>
-                    <a href="{{ path('rental_space_delete', {'id': rental_space.id}) }}">supprimer</a> #}
+                    <a href="{{ path('rental_space_edit', {'id': rental_space.id}) }}"><i class="far fa-2x fa-edit"></i></a>
+                    <a href="{{ path('rental_space_delete', {'id': rental_space.id}) }}"><i class="far fa-2x fa-trash-alt"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -61,14 +59,6 @@
 </div>
 
 {% endblock %}
-
-
-
-
-
-
-
-
 
 
 

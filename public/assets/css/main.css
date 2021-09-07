@@ -28,3 +28,11 @@
   margin-bottom: .2rem;
   padding-top: .3rem;
 }
+
+.modal-header {
+  background-color: #dc3545;
+}
+
+.modal-title {
+  color: white;
+}
