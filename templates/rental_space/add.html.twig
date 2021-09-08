@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvel espace locatif{% endblock %}
+{% block title 'Nouvel espace locatif' %}
+
+{% block javascripts %}
+    <script src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+{% endblock %}
 
 {% block body %}
 <div class="row">
@@ -8,7 +12,8 @@
          <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Ajouter un nouvel espace locatif</h1>
 
         {{ include('rental_space/_form.html.twig') }}
-        <div class="mb-5">      
+        
+        <div class="my-5 text-center surrounding rounded">
             <a href="{{ path('rental_space_list') }}">Retourner au listing</a>
         </div>
         <div class="gap">

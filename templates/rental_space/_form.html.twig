@@ -1,4 +1,7 @@
-{{ form_start(form) }}
+
+<div class="px-2 pb-3 surrounding rounded">
+    {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="my-3 w-100 btn btn-success">{{ button_label|default('Enregister') }}</button>
-{{ form_end(form) }}
+</div>
+    <button class="mt-3 btn btn-success w-100">{{ button_label|default('Enregister') }}</button>
+    {{ form_end(form) }}

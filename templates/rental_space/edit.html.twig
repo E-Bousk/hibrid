@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modification d'un espace locatif{% endblock %}
+{% block title "Modification d'un espace locatif" %}
 
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ path('homepage') }}assets/css/rentalSpacesModal.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+{% endblock %}
 
 {% block body %}
 <div class="row">
@@ -10,14 +17,13 @@
 
         {{ include('rental_space/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-        <button class="mb-3 btn btn-danger" data-bs-toggle="modal" data-bs-target="#Modal">Supprimer</button>
+        <button class="my-3 btn btn-danger" data-bs-toggle="modal" data-bs-target="#Modal">Supprimer</button>
 
         {{ include('rental_space/_modal_delete.html.twig') }}
 
-        <div class="mt-5">
-            <a  href="{{ path('rental_space_list') }}">Retourner au listing</a>
+        <div class="my-5 text-center surrounding rounded">
+            <a href="{{ path('rental_space_list') }}">Retourner au listing</a>
         </div>
-
         <div class="gap">
         </div>
     </div>

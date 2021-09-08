@@ -107,7 +107,7 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
         $isValid= $this->encoder->isPasswordValid($user, $credentials['password']);
         /* (if not valid) send an exception with custom message */
         if (!$isValid) {
-            throw new AuthenticationException("Les informations de connexions ne correspondent pas");
+            throw new AuthenticationException("Les informations de connexion ne correspondent pas");
         }
         return true;
         /* when 'true' is return : authentication is done and OK */

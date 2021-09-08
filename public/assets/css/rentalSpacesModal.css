@@ -1,0 +1,17 @@
+/* ******************************************** */
+/*             RENTAL SPACES MODAL              */
+/*                   DELETE                     */
+/* ******************************************** */
+.modal-header {
+  background-color: #dc3545;
+}
+
+.modal-title {
+  color: white;
+}
+
+.redWarning {
+  color: red;
+  text-decoration: underline red;
+  font-weight: bolder;
+}

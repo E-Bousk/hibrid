@@ -11,7 +11,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Attention : cette action est irréversible !</p>
+                <p class="redWarning">Attention : cette action est irréversible !</p>
                 <p>Supprimer <b>{{ rental_space.rentalSpaceType }}</b>
                     qui se trouve à 
                     <b>{{ rental_space.city }}</b>.
@@ -22,7 +22,7 @@
             <div class="modal-footer">
                 <form method="post" action="{{ path('rental_space_delete', {'id': rental_space.id}) }}">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ rental_space.id) }}">
-                    <button class="btn btn-primary">Confirmer</button>
+                    <button class="btn btn-success">Confirmer</button>
                 </form>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
             </div>

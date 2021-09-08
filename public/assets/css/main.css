@@ -1,7 +1,16 @@
+
 .gap {
   height: 7rem;
 }
 
+label {
+  margin-bottom: .2rem;
+  margin-top: .5rem;
+}
+
+/* ******************************************** */
+/*            EXCEPTIONS MESSAGES               */
+/* ******************************************** */
 .alert {
   padding: 10px;
   color: white;
@@ -29,10 +38,31 @@
   padding-top: .3rem;
 }
 
-.modal-header {
-  background-color: #dc3545;
+/* ******************************************** */
+/*               FORM SURROUNDING               */
+/* ******************************************** */
+.surrounding {
+  background-color: rgba(0, 0, 0, 0.5);
+  /* border-radius: 1%; */
+  color: white;
 }
 
-.modal-title {
+/* unvisited link */
+.surrounding a:link {
+  color: rgb(240, 200, 200);
+}
+
+/* visited link */
+.surrounding a:visited {
+  color: rgb(240, 220, 220);
+}
+
+/* mouse over link */
+.surrounding a:hover {
   color: white;
+}
+
+/* selected link */
+.surrounding a:active {
+  color: yellow;
 }

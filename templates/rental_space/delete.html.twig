@@ -1,29 +1,37 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Suppression d'espace locatif{% endblock %}
+{% block title "Suppression d'espace locatif" %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ path('homepage') }}assets/css/rentalSpacesModal.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+{% endblock %}
 
 {% block body %}
-
 <div class="row">
     <div class="col-md-6 mx-auto">
         <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Suppression d'un espace locatif</h1>
 
-        <div class="mb-3 card bg-secondary">
-            <div class="card-header h6">Vous êtes sur le point d'effacer :</div>
+        <div class="mb-3 card surrounding">
+            <div class="card-header surrounding">Vous êtes sur le point d'effacer :</div>
             <div class="card-body">
-                <b>ID : {{ rental_space.id }}</b><br> {# TO DELETE (working under light) #}
                 <h3 class="card-title">{{ rental_space.rentalSpaceType|upper }}</h3>
-                <p class="card-text">qui se trouve à <b class="h4 text-muted">{{ rental_space.city|upper }}</b>
+                <p class="card-text">qui se trouve à <b class="h4 text-light">{{ rental_space.city|upper }}</b>
                 <br><small>(quantité : {{ rental_space.quantity }})</small></p>
             </div>
         </div>
 
         <div class="d-flex justify-content-center">
-        <button class="my-3 btn btn-danger" data-bs-toggle="modal" data-bs-target="#Modal">Supprimer</button>
+            <button class="my-3 btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#Modal">Supprimer</button>
         </div>
 
-        <a href="{{ path('rental_space_list') }}">Retourner au listing</a>
+        <div class="my-5 text-center surrounding rounded">
+            <a href="{{ path('rental_space_list') }}">Retourner au listing</a>
+        </div>
         <div class="gap">
         </div>
     </div>
