@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Class User | file User.php
@@ -24,45 +26,51 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="integer")
      */
     private $id;
-
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez saisir un prénom")
+     * @Assert\Regex(pattern="/\d/", match=false, message="Votre nom ne peut pas contenir de chiffre")
+     */
+    private $firstName;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez saisir un nom")
+     */
+    private $lastName;
+    
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="Veuillez saisir une adresse email")
+     * @Assert\Email(message="Votre adresse email n'est pas valide")
      */
     private $email;
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
-
+    
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
-
+    
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="json")
      */
-    private $firstName;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $lastName;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+        private $roles = [];
+        
+        /**
+         * @ORM\Column(type="string", length=255, nullable=true)
+         */
     private $telephone1;
-
+    
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $telephone2;
-
+    
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex(pattern="/[a-zA-Z0-9]/", message="Votre adresse ne doit pas comporter de caratères spéciaux")
      */
     private $address;
 

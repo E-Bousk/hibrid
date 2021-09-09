@@ -1,16 +1,38 @@
+body {
+  background-color: rgb(249, 220, 225);
+}
 
+/* ********************************************* */
+/*               FIXED EMPTY SPACE               */
+/* ********************************************* */
 .gap {
   height: 7rem;
 }
 
-label {
-  margin-bottom: .2rem;
-  margin-top: .5rem;
+/* ********************************************* */
+/*       EXCEPTION/FLASHBAG/ERROR MESSAGES       */
+/* ********************************************* */
+
+.form-error-message {
+  background-color: #fff;
+  display: inline-block;
+  padding: .3em;
+  font-size: .90em;
+  font-weight: 700;
+  line-height: 1;
+  color: #dc3545;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25rem;
 }
 
-/* ******************************************** */
-/*            EXCEPTIONS MESSAGES               */
-/* ******************************************** */
+.badge-danger {
+  background-color: #dc3545;
+  margin-bottom: .2rem;
+  padding-top: .3rem;
+}
+
 .alert {
   padding: 10px;
   color: white;
@@ -32,15 +54,17 @@ label {
   background-color: blue;
 }   
 
-.badge-danger {
-  background-color: #dc3545;
+/* ********************************************* */
+/*                   FORM LABEL                  */
+/* ********************************************* */
+label {
   margin-bottom: .2rem;
-  padding-top: .3rem;
+  margin-top: .5rem;
 }
 
-/* ******************************************** */
-/*               FORM SURROUNDING               */
-/* ******************************************** */
+/* ********************************************* */
+/*                FORM SURROUNDING               */
+/* ********************************************* */
 .surrounding {
   background-color: rgba(0, 0, 0, 0.5);
   /* border-radius: 1%; */

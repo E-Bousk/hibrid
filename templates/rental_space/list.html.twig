@@ -15,7 +15,7 @@
 {% block body %}
     <h1 class="my-5 h4"><span class="px-3 py-2 rounded text-white bg-primary">Listing des espaces locatifs</span></h1>
 
-    <table id="dataTable" class="table table-striped table-bordered">
+    <table id="RentalSpaceDataTable" class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th>Designation</th>
@@ -47,10 +47,10 @@
                     <a href="{{ path('rental_space_delete', {'id': rental_space.id}) }}"><i class="far fa-2x fa-trash-alt"></i></a>
                 </td>
             </tr>
-        {% else %}
-            <tr>
+        {# {% else %} #}
+            {# <tr>
                 <td colspan="10">Aucun lieu pour le moment !&emsp;<a href="{{ path('rental_space_add') }}">Créer un espace</a></td>
-            </tr>
+            </tr> #}
         {% endfor %}
         </tbody>
     </table>

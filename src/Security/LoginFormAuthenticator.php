@@ -133,7 +133,7 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
         // /* on success, go to homepage */
         // return new RedirectResponse('/');
         $user= $this->entityManager->getRepository(User::class)->findOneBy(['email' => $token->getUser()->getUsername()]);
-        $this->flashBag->add('success', 'Welcome ' . $user->getFullName());
+        $this->flashBag->add('success', 'Bienvenue ' . $user->getFullName() . ' !');
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);

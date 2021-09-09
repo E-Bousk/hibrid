@@ -8,11 +8,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Validator\Constraints\Email;
 
 /**
  * Class RegistrationFormType | file RegistrationFormType.php
@@ -27,7 +26,7 @@ use Symfony\Component\Validator\Constraints\Email;
 class RegistrationFormType extends AbstractType
 {
     /**
-     * build the form : add label, constraints, placeholder etc...
+     * build the form : add label, password constraints, placeholder etc...
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -37,45 +36,27 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Adresse@Email.com'
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir une adresse email',
-                    ]),
-                    new Email([
-                        'message' => "Votre adresse email n'est pas valide"
-                    ])
-                ]
             ])
             ->add('firstName', TextType::class, [
                 'label' => 'Prénom :',
                 'attr' => [
                     'placeholder' => 'Pierre'
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir un prénom',
-                    ]),
-                ]
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Nom :',
                 'attr' => [
                     'placeholder' => 'Dupont'
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir un nom',
-                    ]),
-                ]
             ])
-            ->add('telephone2', IntegerType::class, [
+            ->add('telephone2', TelType::class, [
                 'label' => 'Téléphone mobile :',
                 'required' => false,
                 'attr' => [
                     'placeholder' => '06 00 01 02 03'
                 ]
             ])
-            ->add('telephone1', IntegerType::class, [
+            ->add('telephone1', TelType::class, [
                 'label' => 'Téléphone fixe :',
                 'required' => false,
                 'attr' => [

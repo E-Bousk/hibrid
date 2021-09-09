@@ -2,7 +2,7 @@
 //                             DATATABLE INITIALIZATION                             //
 // //////////////////////////////////////////////////////////////////////////////// //
 $(document).ready(function () {
-    $("#dataTable").DataTable(configuration);   
+    $("#RentalSpaceDataTable").DataTable(configuration);   
 });
 
 
@@ -11,6 +11,14 @@ $(document).ready(function () {
 // //////////////////////////////////////////////////////////////////////////////// //
 const configuration = 
 {
+    // "columns": [
+    //     { "width": "10%" },
+    //     null,
+    //     null,
+    //     null,
+    //     null
+    //   ],
+    // https://datatables.net/reference/option/columns.width
     "scrollX": true,
     "stateSave": false,
     "order": [[1, "asc"]],
@@ -20,7 +28,7 @@ const configuration =
     "language": 
     {
         "info": "Espaces locatifs _START_ à _END_ sur _TOTAL_ sélectionnés",
-        "emptyTable": "Aucun utilisateur",
+        "emptyTable": "Aucune données",
         "lengthMenu": "_MENU_ espaces locatifs par page",
         "search": "Rechercher dans tableau : ",
         "zeroRecords": "Aucun résultat pour cette recherche",
@@ -60,6 +68,22 @@ const configuration =
             "orderable": true
         },
         {
+            "data": "tarif mois",
+            "render": function(data, type) {
+                var number = $.fn.dataTable.render.number( '.', ',', 0, '€'). display(data);
+                if (type === 'display') {
+                    let color = 'green';
+                    if (data < 2500) {
+                        color = 'red';
+                    }
+                    else if (data < 5000) {
+                        color = 'orange';
+                    }
+
+                    return '<span style="color:' + color + '">' + number + '</span>';
+                }
+                return number;
+            },
             "orderable": true
         },
         {
@@ -78,7 +102,10 @@ const configuration =
             "targets": 0
         },
         // La colonne n'est plus affichée
-        { "visible": false,  "targets": [ 2 ] }
+        { 
+            "targets": [ 2 ],
+            "visible": false
+        }
     ],
     "retrieve": true,
 };

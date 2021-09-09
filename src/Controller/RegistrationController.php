@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
+use App\Security\PreventSqlInjection;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,10 +31,12 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 class RegistrationController extends AbstractController
 {
     private $emailVerifier;
+    private $SqlInjection;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(EmailVerifier $emailVerifier, PreventSqlInjection $SqlInjection)
     {
         $this->emailVerifier = $emailVerifier;
+        $this->SqlInjection= $SqlInjection;
     }
 
     /**
@@ -63,10 +66,34 @@ class RegistrationController extends AbstractController
                     )
                 );
 
+
+            /** *************************************
+             ** MALICIOUS SQL INJECTION PREVENTION **
+             ************************************* */
+            // Get data to replace potential malicious code
+            $data= $form->getData();
+
+            // Get, check and set string with the method 'replaceInData'
+            $firstName= $data->getFirstName();
+            $firstNameSafe= $this->SqlInjection->replaceInData($firstName);
+            $user->setFirstName($firstNameSafe);
+
+            $lastName= $data->getlastName();
+            $lastNameSafe= $this->SqlInjection->replaceInData($lastName);
+            $user->setLastName($lastNameSafe);
+
+            $address= $data->getAddress();
+            $addressSafe= $this->SqlInjection->replaceInData($address);
+            $user->setAddress($addressSafe);
+            
+            // dd($user);
+
+
             // the 'getDoctrine' shortcut comes form 'AbstractController' which has been extended
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+            
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
