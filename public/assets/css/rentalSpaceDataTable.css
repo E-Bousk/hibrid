@@ -1,0 +1,50 @@
+/* ********************************************* */
+/*            RENTAL SPACE DATATABLE             */
+/* ********************************************* */
+#RentalSpaceDataTable {
+    width: 100% !important;
+  }
+  
+  table.dataTable {
+    background-color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+  }
+  
+  table.dataTable > thead > tr > th {
+    padding: 5px 10px;
+    font-weight: bolder;
+    text-align: center;
+  }
+  
+  table.dataTable > thead .sorting:before,
+  table.dataTable > thead .sorting:after,
+  table.dataTable > thead .sorting_asc:before,
+  table.dataTable > thead .sorting_asc:after,
+  table.dataTable > thead .sorting_desc:before,
+  table.dataTable > thead .sorting_desc:after,
+  table.dataTable > thead .sorting_asc_disabled:before,
+  table.dataTable > thead .sorting_asc_disabled:after,
+  table.dataTable > thead .sorting_desc_disabled:before,
+  table.dataTable > thead .sorting_desc_disabled:after {
+    bottom: .4em;
+    color : blue;
+  }
+  
+  table.dataTable tbody th,
+  table.dataTable tbody td {
+    padding: 5px 10px;
+    text-align: center;
+  }
+  
+  .fa-edit {
+    color: green;
+  }
+  
+  .fa-trash-alt {
+    color: red;
+  }
+  
+  .pagination {
+    padding-top: .5rem;
+  }
+  

@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 /**
  * Class RegistrationFormType | file RegistrationFormType.php
@@ -70,25 +71,36 @@ class RegistrationFormType extends AbstractType
                     'placeholder' => '123 avenue du chemin 75000 Paris'
                 ]
             ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly, this is read and encoded in the controller
-                'label' => 'Mot de passe :',
+            // instead of being set onto the object directly, this is read and encoded in the controller
+            ->add('plainPassword', RepeatedType::class, [
                 'mapped' => false,
-                'attr' => [
-                    'autocomplete' => 'new-password',
-                    'placeholder' => 'mot de passe'
+                'type' => PasswordType::class,
+                'first_options' => [
+                    'label' => 'Mot de passe :',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                        'placeholder' => 'mot de passe'                    
+                    ],
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Veuillez saisir un mot de passe',
+                        ]),
+                        new Length([
+                            'min' => 3,
+                            'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
+                            // max length allowed by Symfony for security reasons
+                            'max' => 4096,
+                        ]),
+                    ],
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir un mot de passe',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
+                'second_options' => [
+                    'label' => 'Confirmer le mot de passe :',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                        'placeholder' => 'mot de passe'
+                    ],
                 ],
+                'invalid_message' => 'Les mots de passe ne sont pas identiques !',
             ])
         ;
     }

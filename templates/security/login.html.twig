@@ -3,7 +3,7 @@
 {% block title 'Connexion' %}
 
 {% block javascripts %}
-    <script src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -15,7 +15,7 @@
             <div class="mb-3 alert alert-error rounded">{{ error.message }}</div>
         {% endif %}
 
-        <div class="px-2 pb-3 surrounding rounded">
+        <div class="px-2 pb-3 rounded surrounding">
             {{ form_start(formView) }}
             {{ form_row(formView.email) }}
             {{ form_row(formView.password) }}
@@ -23,8 +23,8 @@
         
         <button type="submit" class="mt-3 btn btn-success w-100">Connexion</button>
         {{ form_end(formView) }}
-        <p class="my-5 text-center surrounding rounded">Vous n'avez pas de compte ?
-            <a class="ms-3" href="{{ path('app_register') }}">Créez&#8209;en&nbsp;un&nbsp;ici</a>
+        <p class="my-5 text-center rounded surrounding">Vous n'avez pas de compte ?
+            <a class="ms-3 surroundingLink" href="{{ path('app_register') }}">Créez&#8209;en&nbsp;un&nbsp;ici</a>
         </p>
     </div>
 </div>

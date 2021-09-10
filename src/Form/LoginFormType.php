@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 /**
- * Class LoginType | file LoginType.php
+ * Class LoginFormType | file LoginFormType.php
  *
  * This class is used to create form for the login page
  * In this class, we have methods for :
@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
  * Adding options if needed (associate with entity for exemple)
  * 
  */
-class LoginType extends AbstractType
+class LoginFormType extends AbstractType
 {
     /**
      * build the form : add label, placeholder etc...

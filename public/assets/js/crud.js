@@ -11,20 +11,12 @@ $(document).ready(function () {
 // //////////////////////////////////////////////////////////////////////////////// //
 const configuration = 
 {
-    // "columns": [
-    //     { "width": "10%" },
-    //     null,
-    //     null,
-    //     null,
-    //     null
-    //   ],
-    // https://datatables.net/reference/option/columns.width
     "scrollX": true,
     "stateSave": false,
     "order": [[1, "asc"]],
     "pagingType": "simple_numbers",
     "searching": true,
-    "lengthMenu": [[5, 10, 25, 50, 100, -1], ["Cinq", "Dix", "Vingt-cinq", "Cinquante", "Cent", "La totalité"]], 
+    "lengthMenu": [[10, 25, 50, 100, -1], ["Dix", "Vingt-cinq", "Cinquante", "Cent", "La totalité"]], 
     "language": 
     {
         "info": "Espaces locatifs _START_ à _END_ sur _TOTAL_ sélectionnés",
@@ -90,22 +82,22 @@ const configuration =
             "orderable": false
         }
     ],
-    "columnDefs": 
-    [
-        {
-            // The `data` parameter refers to the data for the cell (defined by the
-            // `data` option, which defaults to the column being worked with, in
-            // this case `data: 0`.
-            "render": function ( data, type, row ) {
-                return data +" ["+ row[2]+"]";
-            },
-            "targets": 0
-        },
-        // La colonne n'est plus affichée
-        { 
-            "targets": [ 2 ],
-            "visible": false
-        }
-    ],
+    // "columnDefs": 
+    // [
+    //     {
+    //         // The `data` parameter refers to the data for the cell (defined by the
+    //         // `data` option, which defaults to the column being worked with, in
+    //         // this case `data: 0`.
+    //         "render": function ( data, type, row ) {
+    //             return data +"<br>[Quantité: "+ row[2]+"]";
+    //         },
+    //         "targets": 0
+    //     },
+    //     // La colonne n'est plus affichée
+    //     { 
+    //         "targets": [ 2 ],
+    //         "visible": false
+    //     }
+    // ],
     "retrieve": true,
 };

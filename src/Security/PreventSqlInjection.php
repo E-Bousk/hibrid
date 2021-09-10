@@ -9,14 +9,14 @@ namespace App\Security;
  * In this class, we have method for :
  *
  * Replacing quote and semicolon with HTML entities
- * Replaing 'SCRIPT' tags with 'BOLD' tag
+ * Replacing 'SCRIPT' tag with 'BOLD' tag
  * 
  */
 class PreventSqlInjection
 {
     /**
      * Replace quote and semicolon with HTML entities
-     * Replace SCRIPT tags with BOLD tag
+     * Replace SCRIPT tag with BOLD tag
      */
     function replaceInData($data) {
         dump($data);

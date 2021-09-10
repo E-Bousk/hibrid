@@ -3,7 +3,7 @@
 {% block title 'Nouvel espace locatif' %}
 
 {% block javascripts %}
-    <script src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -13,8 +13,8 @@
 
         {{ include('rental_space/_form.html.twig') }}
         
-        <div class="my-5 text-center surrounding rounded">
-            <a href="{{ path('rental_space_list') }}">Retourner au listing</a>
+        <div class="my-5 text-center rounded surrounding">
+            <a class="surroundingLink" href="{{ path('rental_space_list') }}">Retourner au listing</a>
         </div>
         <div class="gap">
         </div>

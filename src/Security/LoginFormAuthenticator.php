@@ -79,7 +79,7 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
     public function getCredentials(Request $request)
     {
         /* get array with email, password and CSRF token */
-        return $request->request->get('login');
+        return $request->request->get('login_form');
         /* on success, send this array to next method */
     }
 
@@ -119,7 +119,7 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         /* get the email to keep it on the inputform (on 'createForm' method, used on 'SecurityController's 'login' method) */
-        $request->attributes->set(Security::LAST_USERNAME, $request->get('login')['email']);
+        $request->attributes->set(Security::LAST_USERNAME, $request->get('login_form')['email']);
 
         /* get the exception to show it (on 'render' method, used on 'SecurityController's 'login' method) */
         $request->attributes->set(Security::AUTHENTICATION_ERROR, $exception);

@@ -10,29 +10,8 @@ body {
 }
 
 /* ********************************************* */
-/*       EXCEPTION/FLASHBAG/ERROR MESSAGES       */
+/*         EXCEPTION / FLASHBAG MESSAGES         */
 /* ********************************************* */
-
-.form-error-message {
-  background-color: #fff;
-  display: inline-block;
-  padding: .3em;
-  font-size: .90em;
-  font-weight: 700;
-  line-height: 1;
-  color: #dc3545;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: .25rem;
-}
-
-.badge-danger {
-  background-color: #dc3545;
-  margin-bottom: .2rem;
-  padding-top: .3rem;
-}
-
 .alert {
   padding: 10px;
   color: white;
@@ -55,6 +34,30 @@ body {
 }   
 
 /* ********************************************* */
+/*                FORM MESSAGES                  */
+/* ********************************************* */
+.form-error-message {
+  background-color: #dc3545;
+  display: inline-block;
+  padding: .3em;
+  font-size: .90em;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25rem;
+}
+
+.badge-danger {
+  background-color: #fff;
+  color: #dc3545;
+  margin-bottom: .2rem;
+  padding-top: .3rem;
+}
+
+/* ********************************************* */
 /*                   FORM LABEL                  */
 /* ********************************************* */
 label {
@@ -66,27 +69,26 @@ label {
 /*                FORM SURROUNDING               */
 /* ********************************************* */
 .surrounding {
-  background-color: rgba(0, 0, 0, 0.5);
-  /* border-radius: 1%; */
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
 }
 
 /* unvisited link */
-.surrounding a:link {
-  color: rgb(240, 200, 200);
+.surroundingLink:link {
+  color: rgb(255, 250, 156);
 }
 
 /* visited link */
-.surrounding a:visited {
-  color: rgb(240, 220, 220);
+.surroundingLink:visited {
+  color: rgb(164, 164, 255);
 }
 
 /* mouse over link */
-.surrounding a:hover {
-  color: white;
+.surroundingLink:hover {
+  color: yellow;
 }
 
 /* selected link */
-.surrounding a:active {
-  color: yellow;
+.surroundingLink:active {
+  color: white;
 }
