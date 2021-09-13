@@ -15,10 +15,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  *
  * In this class, we have method for :
  *
- * C.: creating a new rental space
- * R.: reading (displaying) the rental space(s) management page
- * U.: updating (editing) an existing rental space
- * D.: deleting an existing rental space
+ * C.reate: creating a new rental space with add() method
+ * R.ead: displaying the rental spaces with list() method
+ * U.pdate: editing rental space with edit() method
+ * D.elete: deleting rental space with delete() method
  * 
  */
 #[Route('/admin/gestion/espaces')]
@@ -27,13 +27,14 @@ class RentalSpaceController extends AbstractController
     /**
      * Rental space management page
      * 
-     * Reading the data and display them on a table
+     * List all rental spaces from database
+     * Return a page to display them on a (data)table 
      */
     #[Route('/', name: 'rental_space_list', methods: ['GET'])]
     public function list(RentalSpaceRepository $rentalSpaceRepository): Response
     {
 
-        return $this->render('rental_space/list.html.twig', [
+        return $this->render('gestion/rental_space/list.html.twig', [
             'rental_spaces' => $rentalSpaceRepository->findAll(),
         ]);
     }
@@ -42,8 +43,9 @@ class RentalSpaceController extends AbstractController
     /**
      * Rental space management page
      * 
-     * Create a form to
-     * Adding a new rental space in the database
+     * Insert a new rental space in the database
+     * 
+     * Return a page with an empty form
      */
     #[Route('/ajouter', name: 'rental_space_add', methods: ['GET', 'POST'])]
     public function add(Request $request): Response
@@ -60,7 +62,7 @@ class RentalSpaceController extends AbstractController
             return $this->redirectToRoute('rental_space_list');
         }
 
-        return $this->renderForm('rental_space/add.html.twig', [
+        return $this->renderForm('gestion/rental_space/add.html.twig', [
             'rental_space' => $rentalSpace,
             'form' => $form,
         ]);
@@ -69,8 +71,9 @@ class RentalSpaceController extends AbstractController
     /**
      * Rental space management page
      * 
-     * Create a form to
      * Editing an existing rental space in the database
+     * 
+     * Return a page with a fully filled fields form
      */
     #[Route('/{id}/edit', name: 'rental_space_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, RentalSpace $rentalSpace): Response
@@ -84,7 +87,7 @@ class RentalSpaceController extends AbstractController
             return $this->redirectToRoute('rental_space_list');
         }
 
-        return $this->renderForm('rental_space/edit.html.twig', [
+        return $this->renderForm('gestion/rental_space/edit.html.twig', [
             'rental_space' => $rentalSpace,
             'form' => $form,
         ]);
@@ -94,6 +97,9 @@ class RentalSpaceController extends AbstractController
      * Rental space management page
      * 
      * Deleting an existing rental space in the database
+     * Verifying CSRF token before deleting
+     * 
+     * Return a page with a modal confirmation
      */
     #[Route('/{id}/delete', name: 'rental_space_delete', methods: ['POST', 'GET'])]
     public function delete(Request $request, RentalSpace $rentalSpace): Response
@@ -105,9 +111,8 @@ class RentalSpaceController extends AbstractController
             return $this->redirectToRoute('rental_space_list');
         }
 
-        return $this->renderForm('rental_space/delete.html.twig', [
+        return $this->renderForm('gestion/rental_space/delete.html.twig', [
             'rental_space' => $rentalSpace,
         ]);
-
     }
 }

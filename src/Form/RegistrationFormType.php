@@ -21,7 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
  * In this class, we have methods for :
  *
  * Building the form to send it to view
- * Associating the form with an entity
+ * Associating the form with User entity
  * 
  */
 class RegistrationFormType extends AbstractType
@@ -111,7 +111,7 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => User::class
         ]);
     }
 }

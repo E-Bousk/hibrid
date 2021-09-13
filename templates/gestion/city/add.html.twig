@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'Nouvel espace locatif' %}
+{% block title 'Ajout de ville' %}
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
@@ -9,12 +9,12 @@
 {% block body %}
 <div class="row">
     <div class="col-md-6 mx-auto">
-         <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Ajouter un nouvel espace locatif</h1>
+         <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Ajouter une ville</h1>
 
-        {{ include('rental_space/_form.html.twig') }}
+        {{ include('gestion/_shared/_form.html.twig') }}
         
         <div class="my-5 text-center rounded surrounding">
-            <a class="surroundingLink" href="{{ path('rental_space_list') }}">Retourner au listing</a>
+            <a class="surroundingLink" href="{{ path('city_list') }}">Retourner au listing</a>
         </div>
         <div class="gap">
         </div>

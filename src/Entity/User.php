@@ -30,13 +30,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir un prénom")
-     * @Assert\Regex(pattern="/\d/", match=false, message="Votre nom ne peut pas contenir de chiffre")
+     * @Assert\Regex(pattern="/\d/", match=false, message="Les chiffres ne sont pas autorisés")
      */
     private $firstName;
     
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir un nom")
+     * @Assert\Regex(pattern="/\d/", match=false, message="Les chiffres ne sont pas autorisés")
      */
     private $lastName;
     
@@ -46,6 +47,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\Email(message="Votre adresse email n'est pas valide")
      */
     private $email;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex("/^\+31\(0\)[0-9]*$/", message="Les lettres ne sont pas autorisés")
+     */
+    private $telephone1;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex("/^\+31\(0\)[0-9]*$/", message="Les lettres ne sont pas autorisés")
+     */
+    private $telephone2;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex(pattern="/[a-zA-Z0-9]/", message="Votre adresse ne doit pas comporter de caratères spéciaux")
+     */
+    private $address;
     
     /**
      * @var string The hashed password
@@ -58,22 +77,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
         private $roles = [];
         
-        /**
-         * @ORM\Column(type="string", length=255, nullable=true)
-         */
-    private $telephone1;
-    
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $telephone2;
-    
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Regex(pattern="/[a-zA-Z0-9]/", message="Votre adresse ne doit pas comporter de caratères spéciaux")
-     */
-    private $address;
-
     /**
      * @ORM\Column(type="boolean")
      */

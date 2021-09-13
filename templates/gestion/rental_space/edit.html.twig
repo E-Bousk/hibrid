@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Modification d'espace locatif" %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ path('homepage') }}assets/css/gestionModal.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Modifier un espace locatif</h1>
+
+        {{ include('gestion/_shared/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+        <button class="my-3 btn btn-danger" data-bs-toggle="modal" data-bs-target="#Modal">Supprimer</button>
+
+        {{ include('gestion/_shared/_modal_delete.html.twig') }}
+
+        <div class="my-5 text-center rounded surrounding">
+            <a class="surroundingLink" href="{{ path('rental_space_list') }}">Retourner au listing</a>
+        </div>
+        <div class="gap">
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

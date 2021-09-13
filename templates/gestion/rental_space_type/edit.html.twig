@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title "Modification d'un espace locatif" %}
+{% block title "Modification de type d'espace locatif" %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ path('homepage') }}assets/css/rentalSpacesModal.css">
+	<link rel="stylesheet" href="{{ path('homepage') }}assets/css/gestionModal.css">
 {% endblock %}
 
 {% block javascripts %}
@@ -13,21 +13,19 @@
 {% block body %}
 <div class="row">
     <div class="col-md-6 mx-auto">
-        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Modifier un espace locatif</h1>
+        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Modifier un type d'espace locatif</h1>
 
-        {{ include('rental_space/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+        {{ include('gestion/_shared/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
         <button class="my-3 btn btn-danger" data-bs-toggle="modal" data-bs-target="#Modal">Supprimer</button>
 
-        {{ include('rental_space/_modal_delete.html.twig') }}
+        {{ include('gestion/_shared/_modal_delete.html.twig') }}
 
         <div class="my-5 text-center rounded surrounding">
-            <a class="surroundingLink" href="{{ path('rental_space_list') }}">Retourner au listing</a>
+            <a class="surroundingLink" href="{{ path('rental_space_type_list') }}">Retourner au listing</a>
         </div>
         <div class="gap">
         </div>
     </div>
 </div>
-
-
 {% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Listing des villes' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ path('homepage') }}assets/css/dataTables.bootstrap5.min.css">
+	<link rel="stylesheet" href="{{ path('homepage') }}assets/css/gestionDataTable.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/gestionDataTable.js"></script>
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+
+{% endblock %}
+
+{% block body %}
+    <h1 class="my-5 h4"><span class="px-3 py-2 rounded text-white bg-primary">Listing des villes</span></h1>
+    <div class="px-2 pb-2 rounded surrounding">
+        <table id="CityDataTable" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Ville</th>
+                    <th>Code postal</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for city in cities %}
+                <tr>
+                    <td>{{ city.name }}</td>
+                    <td>{{ city.postalCode }}</td>
+                    <td>
+                        <a href="{{ path('city_edit', {'id': city.id}) }}"><i class="far fa-2x fa-edit"></i></a>
+                        <a href="{{ path('city_delete', {'id': city.id}) }}"><i class="far fa-2x fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-3 gap">
+        <a class="btn btn-success" href="{{ path('city_add') }}"><i class="fas fa-plus-circle"></i> Ajouter une nouvelle ville</a>
+    </div>
+{% endblock %}

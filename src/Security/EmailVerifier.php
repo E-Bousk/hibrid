@@ -17,7 +17,6 @@ use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
  * In this class, we have methods for :
  *
  * sending an email confirmation
- * Adding options if needed (associate with entity for exemple)
  * 
  */
 class EmailVerifier

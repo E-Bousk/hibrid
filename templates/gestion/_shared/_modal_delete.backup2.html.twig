@@ -1,0 +1,41 @@
+{# #################################################################################################### #}
+{#                                           MODAL START                                                #}
+{# #################################################################################################### #}
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        	{# Entête du Modal #}
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+
+            {# Corps du Modal #}
+            <div class="modal-body">
+                {# Text is send with Jquery #}
+                <span id="modalText"></span>
+            </div>
+
+            {# Pied du Modal #}
+            {% if rental_space is defined  %}
+            <div class="modal-footer dataFooterButton" data-action-path="{{ path('rental_space_delete', {'id': rental_space.id}) }}" data-csrf-token="{{ csrf_token('delete' ~ rental_space.id) }}">
+                {# Form is send with Jquery #}
+                <span id="footerForm"></span>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+            </div>
+            {% elseif city is defined %}
+            <div class="modal-footer dataFooterButton" data-action-path="{{ path('city_delete', {'id': city.id}) }}" data-csrf-token="{{ csrf_token('delete' ~ city.id) }}">
+                {# Form is send with Jquery #}
+                <span id="footerForm"></span>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{# #################################################################################################### #}
+{#                                            MODAL END                                                 #}
+{# #################################################################################################### #}

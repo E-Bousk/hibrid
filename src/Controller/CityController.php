@@ -1,0 +1,118 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\City;
+use App\Form\CityFormType;
+use App\Repository\CityRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+/**
+ * Class CityController | file CityController.php
+ *
+ * In this class, we have method for :
+ *
+ * C.reate: creating a new city with add() method
+ * R.ead: displaying the cities with list() method
+ * U.pdate: editing city with edit() method
+ * D.elete: deleting city with delete() method
+ * 
+ */
+#[Route('/admin/gestion/villes')]
+class CityController extends AbstractController
+{
+    /**
+     * City management page
+     * 
+     * List all cities from database
+     * Return a page to display them on a (data)table 
+     */
+    #[Route('/', name: 'city_list', methods: ['GET'])]
+    public function list(CityRepository $cityRepository): Response
+    {
+
+        return $this->render('gestion/city/list.html.twig', [
+            'cities' => $cityRepository->findAll(),
+        ]);
+    }
+
+
+    /**
+     * City management page
+     * 
+     * Insert a new city in the database
+     * 
+     * Return a page with an empty form
+     */
+    #[Route('/ajouter', name: 'city_add', methods: ['GET', 'POST'])]
+    public function add(Request $request): Response
+    {
+        $city = new City();
+        $form = $this->createForm(CityFormType::class, $city);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($city);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('city_list');
+        }
+
+        return $this->renderForm('gestion/city/add.html.twig', [
+            'city' => $city,
+            'form' => $form,
+        ]);
+    }
+    
+    /**
+     * City management page
+     * 
+     * Editing an existing city in the database
+     * 
+     * Return a page with a fully filled fields form
+     */
+    #[Route('/{id}/edit', name: 'city_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, City $city): Response
+    {
+        $form = $this->createForm(CityFormType::class, $city);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('city_list');
+        }
+
+        return $this->renderForm('gestion/city/edit.html.twig', [
+            'city' => $city,
+            'form' => $form,
+        ]);
+    }
+
+    /**
+     * City management page
+     * 
+     * Deleting an existing city in the database
+     * Verifying CSRF token before deleting
+     * 
+     * Return a page with a modal confirmation
+     */
+    #[Route('/{id}/delete', name: 'city_delete', methods: ['POST', 'GET'])]
+    public function delete(Request $request, City $city): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$city->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($city);
+            $entityManager->flush();
+            return $this->redirectToRoute('city_list');
+        }
+
+        return $this->renderForm('gestion/city/delete.html.twig', [
+            'city' => $city,
+        ]);
+    }
+}

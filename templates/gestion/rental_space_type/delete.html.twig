@@ -1,0 +1,42 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title "Suppression de type d'espace locatif" %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ path('homepage') }}assets/css/gestionModal.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/gestionModal.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Suppression d'un typ d'espace locatif</h1>
+
+        <div class="mb-3 card surrounding">
+            <div class="card-header surrounding">Vous êtes sur le point d'effacer :</div>
+            <div class="card-body dataRentalSpaceType" data-rental-space-type="{{ rental_space_type.designation|upper }}">
+                <h3 class="card-title">{{ rental_space_type.designation|upper }}</h3>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <button onClick="deleteRentalSpaceType()" class="my-3 btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#Modal">Supprimer</button>
+        </div>
+
+        <div class="my-5 text-center rounded surrounding">
+            <a class="surroundingLink" href="{{ path('rental_space_type_list') }}">Retourner au listing</a>
+        </div>
+        <div class="gap">
+        </div>
+    </div>
+</div>
+        {{ include('gestion/_shared/_modal_delete.html.twig') }}
+
+
+
+{% endblock %}

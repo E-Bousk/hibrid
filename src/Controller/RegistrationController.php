@@ -43,7 +43,12 @@ class RegistrationController extends AbstractController
      * Registration page
      */
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    public function register(
+                        Request $request,
+                        UserPasswordHasherInterface $passwordEncoder,
+                        GuardAuthenticatorHandler $guardHandler,
+                        LoginFormAuthenticator $authenticator
+                    ): Response
     {
 
         // don't show this registration page if user is already connected
@@ -95,14 +100,14 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             
 
-            // // generate a signed url and email it to the user
-            // $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-            //     (new TemplatedEmail())
-            //         ->from(new Address('noreply@synerg-in.com', 'Synerg-in'))
-            //         ->to($user->getEmail())
-            //         ->subject('Merci de confirmer votre adressse Email')
-            //         ->htmlTemplate('registration/confirmation_email.html.twig')
-            // );
+            // generate a signed url and email it to the user
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('noreply@synerg-in.com', 'Synerg-in'))
+                    ->to($user->getEmail())
+                    ->subject('Merci de confirmer votre adressse Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,

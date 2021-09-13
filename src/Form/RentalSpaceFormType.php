@@ -19,7 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
  * In this class, we have methods for :
  *
  * Building the form to send it to view
- * Associating the form with an entity
+ * Associating the form with RentalSpace entity
  * 
  */
 class RentalSpaceFormType extends AbstractType
@@ -114,7 +114,7 @@ class RentalSpaceFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => RentalSpace::class,
+            'data_class' => RentalSpace::class
         ]);
     }
 }

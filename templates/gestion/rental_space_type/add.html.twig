@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Ajout de type d'espace locatif" %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+         <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Ajouter un nouveau type d'espace locatif</h1>
+
+        {{ include('gestion/_shared/_form.html.twig') }}
+        
+        <div class="my-5 text-center rounded surrounding">
+            <a class="surroundingLink" href="{{ path('rental_space_type_list') }}">Retourner au listing</a>
+        </div>
+        <div class="gap">
+        </div>
+    </div>
+</div>
+{% endblock %}
