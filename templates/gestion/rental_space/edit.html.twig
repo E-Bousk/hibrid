@@ -8,18 +8,19 @@
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/gestionModal.js"></script>
 {% endblock %}
 
 {% block body %}
 <div class="row">
     <div class="col-md-6 mx-auto">
-        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Modifier un espace locatif</h1>
+        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary dataRentalSpace" data-rental-space="{{ rental_space.rentalSpaceType|upper }}" data-rental-space-city="{{ rental_space.city|upper }}" data-rental-space-quantity="{{ rental_space.quantity }}">Modifier un espace locatif</h1>
 
         {{ include('gestion/_shared/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-        <button class="my-3 btn btn-danger" data-bs-toggle="modal" data-bs-target="#Modal">Supprimer</button>
-
         {{ include('gestion/_shared/_modal_delete.html.twig') }}
+
+        <button onClick="deleteRentalSpace()" class="my-3 btn btn-danger" data-bs-toggle="modal" data-bs-target="#Modal">Supprimer</button>
 
         <div class="my-5 text-center rounded surrounding">
             <a class="surroundingLink" href="{{ path('rental_space_list') }}">Retourner au listing</a>

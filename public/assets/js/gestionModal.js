@@ -20,7 +20,10 @@ function deleteRentalSpace() {
 
    // Modal footer
    // $(".modal-footer").css({"background-color": "gray", "color": "white"});
-   $("#footerForm").html("<form method=\"post\" action=\"" + actionPath + "\"><input type=\"hidden\" name=\"_token\" value=\"" + csrfToken + "\"><button class=\"btn btn-success\">Confirmer</button></form>");
+   $("#footerForm").html("<form method=\"post\" action=\""
+                        + actionPath + "\"><input type=\"hidden\" name=\"_token\" value=\""
+                        + csrfToken + "\"><button class=\"btn btn-success\">Confirmer</button></form>"
+   );
 }
 
 function deleteRentalSpaceType() {
@@ -40,7 +43,10 @@ function deleteRentalSpaceType() {
 
    // Modal footer
    // $(".modal-footer").css({"background-color": "gray", "color": "white"});
-   $("#footerForm").html("<form method=\"post\" action=\"" + actionPath + "\"><input type=\"hidden\" name=\"_token\" value=\"" + csrfToken + "\"><button class=\"btn btn-success\">Confirmer</button></form>");
+   $("#footerForm").html("<form method=\"post\" action=\"" + actionPath
+                        + "\"><input type=\"hidden\" name=\"_token\" value=\""
+                        + csrfToken + "\"><button class=\"btn btn-success\">Confirmer</button></form>"
+   );
 }
 
 function deleteCity() {
@@ -62,5 +68,8 @@ function deleteCity() {
 
    // Modal footer
    // $(".modal-footer").css({"background-color": "gray", "color": "white"});
-   $("#footerForm").html("<form method=\"post\" action=\"" + actionPath + "\"><input type=\"hidden\" name=\"_token\" value=\"" + csrfToken + "\"><button class=\"btn btn-success\">Confirmer</button></form>");
+   $("#footerForm").html("<form method=\"post\" action=\""
+                        + actionPath + "\"><input type=\"hidden\" name=\"_token\" value=\""
+                        + csrfToken + "\"><button class=\"btn btn-success\">Confirmer</button></form>"
+   );
 }
