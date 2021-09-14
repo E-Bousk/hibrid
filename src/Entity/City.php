@@ -6,6 +6,8 @@ use App\Repository\CityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Class City | file City.php
@@ -25,11 +27,15 @@ class City
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=1, max=255, 
+     *      minMessage="Le nom de la ville doit faire plus de {{ limit }} caractères", 
+     *      maxMessage="Le nom de la ville ne peut pas faire plus de {{ limit }} caractères")
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Regex("/^(?:[0-8]\d|9[0-8])\d{3}$/", message="Ce code postal n'est pas valide")
      */
     private $postalCode;
 

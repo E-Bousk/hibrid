@@ -30,14 +30,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir un prénom")
-     * @Assert\Regex(pattern="/\d/", match=false, message="Les chiffres ne sont pas autorisés")
+     * @Assert\Regex("/^[^0-9]+$/", message="Les chiffres ne sont pas autorisés")
+     * @Assert\Length(min=1, max=255, 
+     *      minMessage="Le prénom doit faire plus de {{ limit }} caractères", 
+     *      maxMessage="Le prénom ne peut pas faire plus de {{ limit }} caractères")
      */
     private $firstName;
     
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir un nom")
-     * @Assert\Regex(pattern="/\d/", match=false, message="Les chiffres ne sont pas autorisés")
+     * @Assert\Regex("/^[^0-9]+$/", message="Les chiffres ne sont pas autorisés")
+     * @Assert\Length(min=1, max=255, 
+     *      minMessage="Le nom doit faire plus de {{ limit }} caractères", 
+     *      maxMessage="Le nom ne peut pas faire plus de {{ limit }} caractères")
      */
     private $lastName;
     
@@ -49,20 +55,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $email;
     
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Regex("/^\+31\(0\)[0-9]*$/", message="Les lettres ne sont pas autorisés")
+     * @ORM\Column(type="string", length=15, nullable=true)
+     * @Assert\Regex("/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/",
+     *      message="Ce numéro de téléphone n'est pas valide")
      */
     private $telephone1;
     
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Regex("/^\+31\(0\)[0-9]*$/", message="Les lettres ne sont pas autorisés")
+     * @ORM\Column(type="string", length=15, nullable=true)
+     * @Assert\Regex("/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/",
+     *      message="Ce numéro de téléphone n'est pas valide")
      */
     private $telephone2;
     
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Regex(pattern="/[a-zA-Z0-9]/", message="Votre adresse ne doit pas comporter de caratères spéciaux")
+     * @Assert\Length(max=255, maxMessage="L'adresse ne peut pas faire plus de {{ limit }} caractères")
      */
     private $address;
     

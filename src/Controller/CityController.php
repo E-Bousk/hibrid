@@ -75,7 +75,7 @@ class CityController extends AbstractController
      * 
      * Return a page with a fully filled fields form
      */
-    #[Route('/{id}/edit', name: 'city_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/editer', name: 'city_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, City $city): Response
     {
         $form = $this->createForm(CityFormType::class, $city);
@@ -101,7 +101,7 @@ class CityController extends AbstractController
      * 
      * Return a page with a modal confirmation
      */
-    #[Route('/{id}/delete', name: 'city_delete', methods: ['POST', 'GET'])]
+    #[Route('/{id}/supprimer', name: 'city_delete', methods: ['POST', 'GET'])]
     public function delete(Request $request, City $city): Response
     {
         if ($this->isCsrfTokenValid('delete'.$city->getId(), $request->request->get('_token'))) {

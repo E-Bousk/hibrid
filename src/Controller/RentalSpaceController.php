@@ -75,7 +75,7 @@ class RentalSpaceController extends AbstractController
      * 
      * Return a page with a fully filled fields form
      */
-    #[Route('/{id}/edit', name: 'rental_space_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/editer', name: 'rental_space_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, RentalSpace $rentalSpace): Response
     {
         $form = $this->createForm(RentalSpaceFormType::class, $rentalSpace);
@@ -101,7 +101,7 @@ class RentalSpaceController extends AbstractController
      * 
      * Return a page with a modal confirmation
      */
-    #[Route('/{id}/delete', name: 'rental_space_delete', methods: ['POST', 'GET'])]
+    #[Route('/{id}/supprimer', name: 'rental_space_delete', methods: ['POST', 'GET'])]
     public function delete(Request $request, RentalSpace $rentalSpace): Response
     {
         if ($this->isCsrfTokenValid('delete'.$rentalSpace->getId(), $request->request->get('_token'))) {
