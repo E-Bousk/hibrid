@@ -54,12 +54,35 @@ class CityController extends AbstractController
         $form = $this->createForm(CityFormType::class, $city);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($city);
-            $entityManager->flush();
+        // If parameters of request are not empty (filled and submitted form)
+        if ($request->request->get('city_form')) {
 
-            return $this->redirectToRoute('city_list');
+            // dd($request->request->get('city_form'));
+
+            // get the CSRF token generated on the modal
+            $submittedToken = $request->request->get('city_form')['_token'];
+
+            // Create a CITY from CITY add page
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                // dd("1 - Ajout depuis ville");
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($city);
+                $entityManager->flush();
+    
+                return $this->redirectToRoute('city_list');
+            }
+
+            // Create a CITY from RENTAL SPACE add page
+            if ($form->isSubmitted() && $this->isCsrfTokenValid('city_form__token', $submittedToken)) {
+
+                // dd("2 - Ajout depuis l'espace locatif");
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($city);
+                $entityManager->flush();
+    
+                return $this->redirectToRoute('rental_space_add');
+            }
         }
 
         return $this->renderForm('gestion/city/add.html.twig', [

@@ -1,7 +1,8 @@
 /* ******************************************** */
 /*                GESTION MODAL                 */
-/*                   DELETE                     */
 /* ******************************************** */
+
+/* default colors are for DELETE modals */
 .modal-header {
   background-color: #dc3545;
 }

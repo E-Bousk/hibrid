@@ -54,14 +54,37 @@ class RentalSpaceTypeController extends AbstractController
         $form = $this->createForm(RentalSpaceTypeFormType::class, $rentalSpaceType);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($rentalSpaceType);
-            $entityManager->flush();
+        // If parameters of request are not empty (filled and submitted form)
+        if ($request->request->get('rental_space_type_form')) {
+            
+            // dd($request->request->get('rental_space_type_form'));
 
-            return $this->redirectToRoute('rental_space_type_list');
+            // get the CSRF token generated on the modal
+            $submittedToken = $request->request->get('rental_space_type_form')['_token'];
+
+            // Create a RENTAL SPACE TYPE from RENTAL SPACE TYPE add page
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                // dd("1 - Ajout depuis type d'espace locatif");
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($rentalSpaceType);
+                $entityManager->flush();
+    
+                return $this->redirectToRoute('rental_space_type_list');
+            }
+            
+            // Create a RENTAL SPACE TYPE from RENTAL SPACE add page
+            if ($form->isSubmitted() && $this->isCsrfTokenValid('rental_space_type_form__token', $submittedToken)) {
+
+                // dd("2 - Ajout depuis l'espace locatif");
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($rentalSpaceType);
+                $entityManager->flush();
+    
+                return $this->redirectToRoute('rental_space_add');
+            }
         }
-
+        
         return $this->renderForm('gestion/rental_space_type/add.html.twig', [
             'rental_space_type' => $rentalSpaceType,
             'form' => $form,

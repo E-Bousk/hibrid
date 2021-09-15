@@ -5,7 +5,9 @@ namespace App\Form;
 use App\Entity\City;
 use App\Entity\RentalSpace;
 use App\Entity\RentalSpaceType;
+use App\Repository\CityRepository;
 use Symfony\Component\Form\AbstractType;
+use App\Repository\RentalSpaceTypeRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -35,6 +37,10 @@ class RentalSpaceFormType extends AbstractType
                 'placeholder' => "-- Choisir un type d'espace locatif --",
                 'class' => RentalSpaceType::class,
                 'choice_label' => 'designation',
+                'query_builder' => function (RentalSpaceTypeRepository $rstr) {
+                    return $rstr->createQueryBuilder('d')
+                        ->orderBy('d.designation', 'ASC');
+                },
                 'constraints' => [
                     new NotBlank([
                         'message' => "Veuillez saisir un type d'espace locatif",
@@ -46,6 +52,10 @@ class RentalSpaceFormType extends AbstractType
                 'placeholder' => '-- Choisir une ville --',
                 'class' => City::class,
                 'choice_label' => 'name',
+                'query_builder' => function (CityRepository $cr) {
+                    return $cr->createQueryBuilder('n')
+                        ->orderBy('n.name', 'ASC');
+                },
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez saisir une ville',

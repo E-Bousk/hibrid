@@ -1,7 +1,7 @@
-
 <div class="px-2 pb-3 rounded surrounding">
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_widget(form) }}
+    {# {{ dump () }} #}
 </div>
-    <button class="mt-3 btn btn-success w-100">{{ button_label|default('Enregister') }}</button>
-    {{ form_end(form) }}
+<button class="mt-3 btn btn-success w-100">{{ button_label|default('Enregister') }}</button>
+{{ form_end(form) }}

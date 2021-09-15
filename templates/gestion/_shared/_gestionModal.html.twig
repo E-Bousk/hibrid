@@ -1,0 +1,52 @@
+{# #################################################################################################### #}
+{#                                           MODAL START                                                #}
+{# #################################################################################################### #}
+{% set currentPath = path(app.request.attributes.get('_route'),
+                       app.request.attributes.get('_route_params')) %}
+
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        	{# Entête du Modal #}
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+
+            {# Corps du Modal #}
+            <div class="modal-body">
+                {# Text is generated with Jquery #}
+                <span id="modalBodyText"></span>
+            </div>
+
+            {# Pied du Modal #}
+            <div class="modal-footer">
+                {# To manage the modal footer for the deletion [of cities, rental_spaces or rental_space_types] on [delete or edit] pages #}
+                {% if ('/supprimer' in currentPath) or ('/editer' in currentPath) %}
+                    {# Form action path and CSRF token are generated with Jquery #}
+                    {% if rental_space is defined  %}
+                        <span id="modalFooterForm" data-action-path="{{ path('rental_space_delete', {'id': rental_space.id}) }}" data-csrf-token="{{ csrf_token('delete' ~ rental_space.id) }}">
+                        </span>
+                    {% elseif rental_space_type is defined %}
+                        <span id="modalFooterForm" data-action-path="{{ path('rental_space_type_delete', {'id': rental_space_type.id}) }}" data-csrf-token="{{ csrf_token('delete' ~ rental_space_type.id) }}">
+                        </span>
+                    {% elseif city is defined %}
+                        <span id="modalFooterForm" data-action-path="{{ path('city_delete', {'id': city.id}) }}" data-csrf-token="{{ csrf_token('delete' ~ city.id) }}">
+                        </span>
+                    {% endif %}
+                {# To manage the creation [of a new city or a new rental_space_type] on rental_space creation page #}
+                {% else %}
+                    <span id="modalFooterForm" data-csrf-token-rental-space-type="{{ csrf_token('rental_space_type_form__token') }}" data-csrf-token-city="{{ csrf_token('city_form__token') }}">
+                    </span>
+                {% endif %}
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>
+{# #################################################################################################### #}
+{#                                            MODAL END                                                 #}
+{# #################################################################################################### #}
