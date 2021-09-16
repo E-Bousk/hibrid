@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Form\CityFormType;
 use App\Repository\CityRepository;
+use App\Security\PreventSqlInjection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,11 +49,22 @@ class CityController extends AbstractController
      * Return a page with an empty form
      */
     #[Route('/ajouter', name: 'city_add', methods: ['GET', 'POST'])]
-    public function add(Request $request): Response
+    public function add(Request $request, PreventSqlInjection $preventSqlInjection): Response
     {
         $city = new City();
         $form = $this->createForm(CityFormType::class, $city);
         $form->handleRequest($request);
+
+        /** *************************************
+         ** MALICIOUS SQL INJECTION PREVENTION **
+        ************************************* */
+        // Get data to replace potential malicious code
+        $data= $form->getData();
+        // Get, check and set string with the method 'replaceInData'
+        $Name= $data->getName();
+        $nameSafe= $preventSqlInjection->replaceInData($Name);
+        $city->setName($nameSafe);
+
 
         // If parameters of request are not empty (filled and submitted form)
         if ($request->request->get('city_form')) {

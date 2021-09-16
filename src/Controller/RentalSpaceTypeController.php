@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\RentalSpaceType;
 use App\Form\RentalSpaceTypeFormType;
+use App\Security\PreventSqlInjection;
 use App\Repository\RentalSpaceTypeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,11 +49,21 @@ class RentalSpaceTypeController extends AbstractController
      * Return a page with an empty form
      */
     #[Route('/ajouter', name: 'rental_space_type_add', methods: ['GET', 'POST'])]
-    public function add(Request $request): Response
+    public function add(Request $request, PreventSqlInjection $preventSqlInjection): Response
     {
         $rentalSpaceType = new RentalSpaceType();
         $form = $this->createForm(RentalSpaceTypeFormType::class, $rentalSpaceType);
         $form->handleRequest($request);
+
+        /** *************************************
+         ** MALICIOUS SQL INJECTION PREVENTION **
+        ************************************* */
+        // Get data to replace potential malicious code
+        $data= $form->getData();
+        // Get, check and set string with the method 'replaceInData'
+        $designation= $data->getDesignation();
+        $designationSafe= $preventSqlInjection->replaceInData($designation);
+        $rentalSpaceType->setDesignation($designationSafe);
 
         // If parameters of request are not empty (filled and submitted form)
         if ($request->request->get('rental_space_type_form')) {

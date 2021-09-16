@@ -43,7 +43,7 @@ class RentalSpaceFormType extends AbstractType
                 },
                 'constraints' => [
                     new NotBlank([
-                        'message' => "Veuillez saisir un type d'espace locatif",
+                        'message' => "Veuillez choisir un type d'espace locatif",
                     ])
                 ]
             ])
@@ -58,7 +58,7 @@ class RentalSpaceFormType extends AbstractType
                 },
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir une ville',
+                        'message' => 'Veuillez choisir une ville',
                     ])
                 ]
             ])

@@ -28,6 +28,7 @@ class PreventSqlInjection
         
         $data= htmlspecialchars($data, ENT_QUOTES);
         $data= str_replace(";", "__SEMICOLON__", $data);
+        
         dump($data);
         return $data;
     }

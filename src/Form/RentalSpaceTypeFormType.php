@@ -32,11 +32,6 @@ class RentalSpaceTypeFormType extends AbstractType
                 'attr' => [
                     'placeholder' => "Renseigner ici le type d'espace locatif",
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Saisie obligatoire !',
-                    ])
-                ]
             ])
         ;
     }

@@ -33,19 +33,13 @@ class CityFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Moulinsart',
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir une ville',
-                    ])
-                ]
             ])
             ->add('postalCode', NumberType::class, [
                 'label' => 'Code postal :',
-                'required' => false,
                 'attr' => [
                     'placeholder' => '12345'
                 ],
-                'invalid_message' => 'Veuillez saisir un nombre'
+                'invalid_message' => 'Veuillez saisir un code postal (chiffre)'
             ]);
     }
 
