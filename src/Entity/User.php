@@ -30,7 +30,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir un prénom")
-     * @Assert\Regex("/^[^0-9]+$/", message="Les chiffres ne sont pas autorisés")
+     * @Assert\Regex("/^[^0-9@&()<>!_$*€£+=\/;:?#\\\x22\`]+$/", message="Seules les lettres sont autorisées")
      * @Assert\Length(min=1, max=255, 
      *      minMessage="Le prénom doit faire plus de {{ limit }} caractères", 
      *      maxMessage="Le prénom ne peut pas faire plus de {{ limit }} caractères")
@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir un nom")
-     * @Assert\Regex("/^[^0-9]+$/", message="Les chiffres ne sont pas autorisés")
+     * @Assert\Regex("/^[^0-9@&()<>!_$*€£+=\/;:?#\\\x22\`]+$/", message="Seules les lettres sont autorisées")
      * @Assert\Length(min=1, max=255, 
      *      minMessage="Le nom doit faire plus de {{ limit }} caractères", 
      *      maxMessage="Le nom ne peut pas faire plus de {{ limit }} caractères")

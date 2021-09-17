@@ -24,10 +24,11 @@ class City
      * @ORM\Column(type="integer")
      */
     private $id;
-
+    
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir une ville")
+     * @Assert\Regex("/^[^0-9@&()<>!_$*€£+=\/;:?#\\\x22\`]+$/", message="Ce nom n'est pas valide")
      * @Assert\Length(min=1, max=255, 
      *      minMessage="Le nom de la ville doit faire plus de {{ limit }} caractères", 
      *      maxMessage="Le nom de la ville ne peut pas faire plus de {{ limit }} caractères")

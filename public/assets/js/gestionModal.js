@@ -1,7 +1,11 @@
-// ################################################################## //
-// #####              MODAL -- DELETE CONFIRMATION              ##### //
-// #####                      RENTAL SPACE                      ##### //
-// ################################################################## //  
+// ########################################################### //
+// #####                      MODAL                      ##### //
+// #####             DELETE CONFIRMATION PART            ##### //
+// ########################################################### // 
+
+// ################################## //
+// ###    DELETE RENTAL SPACE     ### //
+// ################################## //  
 function deleteRentalSpace() {
    // Get data from TWIG view
    var rentalSpace= $(".dataRentalSpace").data("rental-space");
@@ -27,10 +31,9 @@ function deleteRentalSpace() {
    );
 }
 
-// ################################################################## //
-// #####              MODAL -- DELETE CONFIRMATION              ##### //
-// #####                   RENTAL SPACE TYPE                    ##### //
-// ################################################################## //  
+// ################################## //
+// ###  DELETE RENTAL SPACE TYPE  ### //
+// ################################## //  
 function deleteRentalSpaceType() {
    // Get data from TWIG view
    var rentalSpaceType= $(".dataRentalSpaceType").data("rental-space-type");
@@ -52,10 +55,9 @@ function deleteRentalSpaceType() {
    );
 }
 
-// ################################################################## //
-// #####              MODAL -- DELETE CONFIRMATION              ##### //
-// #####                          CITY                          ##### //
-// ################################################################## //
+// ################################## //
+// ###        DELETE CITY         ### //
+// ################################## //
 function deleteCity() {
    // Get data from TWIG view
    var city= $(".dataCity").data("city");
@@ -79,10 +81,15 @@ function deleteCity() {
    );
 }
 
-// ################################################################## //
-// #####                   MODAL -- ADD FORM                    ##### //
-// #####                   RENTAL SPACE TYPE                    ##### //
-// ################################################################## //
+
+// ########################################################### //
+// #####                      MODAL                      ##### //
+// #####                  ADD FORM PART                  ##### //
+// ########################################################### // 
+
+// ################################# //
+// ###   ADD RENTAL SPACE TYPE   ### //
+// ################################# //
 function addRentalSpaceType() {
    // Get data from TWIG view
    var csrfTokenRentalSpaceType= $("#modalFooterForm").data("csrf-token-rental-space-type");
@@ -93,21 +100,51 @@ function addRentalSpaceType() {
    $(".modal-title").html("Ajout d'un type d'espace locatif");
    
    // Modal Main text
-   $("#modalBodyText").html("<form name=\"rental_space_type_form\" method=\"post\" action=\"/admin/gestion/types/ajouter\" novalidate=\"novalidate\"><div id=\"rental_space_type_form\"><div class=\"form-group\"><label for=\"rental_space_type_form_designation\" class=\"mb-3 required\">Type d'espace locatif :</label><input type=\"text\" id=\"rental_space_type_form_designation\" name=\"rental_space_type_form[designation]\" required=\"required\" placeholder=\"Renseigner ici le type d'espace locatif\" class=\"form-control\"></div><input type=\"hidden\" id=\"rental_space_type_form__token\" name=\"rental_space_type_form[_token]\" value=\"" + csrfTokenRentalSpaceType + "\"></div><button id=\"formButton\" class=\"d-none\">Enregister</button></form>");
+   $("#modalBodyText").html("<form id=\"addRentalSpaceTypeForm\" name=\"rental_space_type_form\" method=\"post\" action=\"/admin/gestion/types/ajouter\" novalidate=\"novalidate\"><div id=\"rental_space_type_form\"><div class=\"form-group\"><label for=\"rental_space_type_form_designation\" class=\"mb-2 required\">Type d'espace locatif :<span id=\"validateMessageDesignation\" class=\"invalid-feedback d-block\"></span></label><input type=\"text\" id=\"rental_space_type_form_designation\" name=\"rental_space_type_form[designation]\" required=\"required\" placeholder=\"Renseigner ici le type d'espace locatif\" class=\"form-control\"></div><input type=\"hidden\" id=\"rental_space_type_form__token\" name=\"rental_space_type_form[_token]\" value=\"" + csrfTokenRentalSpaceType + "\"></div><input id=\"submitRentalSpaceTypeForm\" type=\"submit\" class=\"d-none\"></form>");
 
    // Modal footer
-   $("#modalFooterForm").html("<button id=\"validationButton\" class=\"btn btn-success\">Enregister</button>");
+   $("#modalFooterForm").html("<button id=\"validationRentalSpaceTypeButton\" class=\"btn btn-success\">Enregister</button>");
+   
+   // Use the modal footer 'validate' button to trigger the hidden 'form' input
+   $('#validationRentalSpaceTypeButton').click(function() {
+      $("#submitRentalSpaceTypeForm").click();
+   });
+   
+   // #################################
+   // ###    VALIDATION CONTROL     ###
+   // #################################
+   $("#addRentalSpaceTypeForm").on("submit", function(e) {
+      var error;
+      var dataDesignation= $("#rental_space_type_form_designation").val();
+      var regExDesignation= /^[^@&"()<>!_$*€£`+=\/\\;:?#]+$/;
+      var minSizeDesignation= 3;
+      var maxSizeDesignation= 255;
 
-   // Use the modal footer 'validate' button to trigger the hidden 'form' button
-   $('#validationButton').click(function(){
-      $("#formButton").click();
-   })
+      if (!dataDesignation) {
+         error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir un type d'espace locatif</span></span>";
+      } else if (!dataDesignation.match(regExDesignation)) {
+         error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Les caractères spéciaux ne sont pas autorisés</span></span>";
+      } else if (dataDesignation.length < minSizeDesignation) {
+         error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir moins de 3 caractères</span></span>";
+      } else if (dataDesignation.length > maxSizeDesignation) {
+         error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir plus de 255 caractères</span></span>";
+      }
+
+      if (error) {
+         $("#validateMessageDesignation").html(error);
+         e.preventDefault();
+         return false;
+      } else {
+         $("#validateMessageDesignation").html("");
+      }
+   });
 }
 
-// ################################################################## //
-// #####                   MODAL -- ADD FORM                    ##### //
-// #####                         CITY                           ##### //
-// ################################################################## //
+
+
+// ################################# //
+// ###         ADD CITY          ### //
+// ################################# //
 function addCity() {
    // Get data from TWIG view
    var csrfTokenCity= $("#modalFooterForm").data("csrf-token-city");
@@ -118,129 +155,59 @@ function addCity() {
    $(".modal-title").html("Ajout d'une ville");
    
    // Modal Main text
-   $("#modalBodyText").html("<form id=\"cityForm\" name=\"city_form\" method=\"post\" action=\"/admin/gestion/villes/ajouter\"><div id=\"city_form\"><div class=\"form-group\"><label for=\"city_form_name\" class=\"required\">Ville :<span id=\"validateMessageName\" class=\"d-block\"></span></label><input type=\"text\" id=\"city_form_name\" name=\"city_form[name]\" NOrequired=\"NOrequired\" placeholder=\"Moulinsart\" class=\"form-control\"></div><div class=\"form-group\"><label for=\"city_form_postalCode\">Code postal :<span id=\"validateMessagePostalCode\" class=\"d-block\"></span></label><input type=\"text\" id=\"city_form_postalCode\" name=\"city_form[postalCode]\" NOrequired=\"NOrequired\" placeholder=\"12345\" class=\"form-control\"></div><input type=\"hidden\" id=\"city_form__token\" name=\"city_form[_token]\" value=\"" + csrfTokenCity + "\"></div><button id=\"formButton\" class=\"d-none\">Enregister</button></form>");
+   $("#modalBodyText").html("<form id=\"addCityForm\" name=\"city_form\" method=\"post\" action=\"/admin/gestion/villes/ajouter\" novalidate=\"novalidate\"><div id=\"city_form\"><div class=\"form-group\"><label for=\"city_form_name\" class=\"required\">Ville :<span id=\"validateMessageName\" class=\"invalid-feedback d-block\"></span></label><input type=\"text\" id=\"city_form_name\" name=\"city_form[name]\" required=\"required\" placeholder=\"Moulinsart\" class=\"form-control\"></div><div class=\"form-group mt-3\"><label for=\"city_form_postalCode\" class=\"required\">Code postal :<span id=\"validateMessagePostalCode\" class=\"invalid-feedback d-block\"></span></label><input type=\"text\" id=\"city_form_postalCode\" name=\"city_form[postalCode]\" required=\"required\" placeholder=\"12345\" class=\"form-control\"></div><input type=\"hidden\" id=\"city_form__token\" name=\"city_form[_token]\" value=\"" + csrfTokenCity + "\"></div><input id=\"submitCityForm\" type=\"submit\" class=\"d-none\"></form>");
 
    // Modal footer
-   $("#modalFooterForm").html("<button onclick=\"validateData()\" id=\"validationButton\" class=\"btn btn-success\">Enregister</button>");
+   $("#modalFooterForm").html("<button id=\"validationCityButton\" class=\"btn btn-success\">Enregister</button>");
 
    // Use the modal footer 'validate' button to trigger the hidden 'form' button
-   // $('#validationButton').click(function(){
-   //    $("#formButton").click();
-   // })
-}
+   $('#validationCityButton').click(function(){
+      $("#submitCityForm").click();
+   })
 
-// ################################################################## //
-// #####                MODAL -- VALIDATION FORM                ##### //
-// #####                         CITY                           ##### //
-// ################################################################## //
+   // #################################
+   // ###    VALIDATION CONTROL     ###
+   // #################################
+   $("#addCityForm").on("submit", function(e) {
+      var errorName;
+      var errorPostalCode;
+      var dataName= $("#city_form_name").val();
+      var dataPostalCode= $("#city_form_postalCode").val();
+      var regExName= /^[^0-9@&"()<>!_$*€£`+=\/;:?#]+$/;
+      var regExPostalCode= /^(?:[0-8]\d|9[0-8])\d{3}$/;
+      var minSizeDesignation= 3;
+      var maxSizeDesignation= 255;
 
-function validateData(){
-   var regExPostalCode= /^(?:[0-8]\d|9[0-8])\d{3}$/;
-   var regExName= /^[^0-9]+$/;
-   var dataName= $("#city_form_name").val();
-   var dataPostalCode= $("#city_form_postalCode").val();
-
-   var dataNameOK= false;
-   var dataPostalCodeOK= false;
-
-   if (!dataName) {
-      $("#validateMessageName").html("<span class=\"d-block\"><span class=\"form-error-icon badge badge-danger text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir une ville</span></span>");
-      console.error('EMPTY name');
-   } else {
-      if (dataName.match(regExName)) {
+      if (!dataName) {
+         errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir une ville</span></span>";
+      } else if (!dataName.match(regExName)) {
+         errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce nom n'est pas valide</span></span>";
+      } else if (dataName.length < minSizeDesignation) {
+         errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir moins de 3 caractères</span></span>";
+      } else if (dataName.length > maxSizeDesignation) {
+         errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir plus de 255 caractères</span></span>";
+      } else {
          $("#validateMessageName").html("");
-         console.error('OK name');
-         dataNameOK= true;
-      } else {
-         $("#validateMessageName").html("Seules les lettres sont autorisées");
-         console.error('WRONG name');
       }
-   }
-   
-   if (!dataPostalCode) {
-      $("#validateMessagePostalCode").html("<span class=\"d-block\"><span class=\"form-error-icon badge badge-danger text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir un code postal</span></span>");
-      console.error('EMPTY code');
-   } else {
-      if (dataPostalCode.match(regExPostalCode)) {
-         console.log('OK code');
-         dataPostalCodeOK= true;
-      } else {
-         $("#validateMessagePostalCode").html("Ce code postal n'est pas valide");
-         console.log('WRONG code');
-      }
-   }
-   
-   if (dataNameOK === true && dataPostalCodeOK === true) {
-      console.log("GOGO !!");
-      $("#formButton").click();
-   }
-   
-   // $("#city_form_postalCode").val("blblblbl");
 
+
+      if (!dataPostalCode) {
+         errorPostalCode= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir un code postal</span></span>";
+      } else if (!dataPostalCode.match(regExPostalCode)) {
+         errorPostalCode= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce code postal n'est pas valide</span></span>";
+      } else {
+         $("#validateMessagePostalCode").html("");
+      }
+      
+      if (errorName || errorPostalCode) {
+         $("#validateMessageName").html(errorName);
+         $("#validateMessagePostalCode").html(errorPostalCode);
+         e.preventDefault();
+         alert('block');
+         return false;
+      } else {
+         $("#validateMessageName").html("");
+         $("#validateMessagePostalCode").html("");
+      }
+   });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ////////////////////////////////////////////////////////////////////////
-
-// $('#cityForm').validate({ // initialize the plugin
-//    rules: {
-//       "city_form[postalCode]": {
-//          required: true,
-//          minlength: 5,
-//          maxlength: 5,
-//          // regex: /^(\+33\.|0)[0-9]{9}$/
-//       },
-//       "city_form[name]": {
-//             required: true,
-//             minlength: 5
-//         },
-//    },
-//    // submitHandler: function (form) { // for demo
-//    //     alert('valid form submitted'); // for demo
-//    //     return false; // for demo
-//    // }
-// });
-
-
-
-// jQuery.extend(jQuery.validator.messages, {
-//    required: "Ce champs ne peut pas être vide",
-//    number: "votre message",
-//    digits: "votre message",
-//    accept: "votre message",
-//    maxlength: jQuery.validator.format("Le code postal doit faire {0} caractéres max."),
-//    minlength: jQuery.validator.format("Le code postal doit faire {0} caractéres min."),
-//    rangelength: jQuery.validator.format("votre message  entre {0} et {1} caractéres."),
-//    range: jQuery.validator.format("votre message  entre {0} et {1}."),
-//    max: jQuery.validator.format("votre message  inférieur ou égal à {0}."),
-//    min: jQuery.validator.format("votre message  supérieur ou égal à {0}.")
-//  });

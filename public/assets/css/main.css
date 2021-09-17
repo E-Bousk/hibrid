@@ -92,3 +92,16 @@ label {
 .surroundingLink:active {
   color: white;
 }
+
+
+/* ********************************************* */
+/*                     MODAL                     */
+/*                  ERROR BADGE                  */
+/* ********************************************* */
+.badge-danger-modal {
+  /* background-color: #ccc; */
+  color: #dc3545;
+  border: solid 1px #dc3545;
+  border-radius: .25rem;
+  line-height: 1.1; 
+}

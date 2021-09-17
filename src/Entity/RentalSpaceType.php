@@ -28,6 +28,7 @@ class RentalSpaceType
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir un type d'espace locatif")
+     * @Assert\Regex("/^[^@&()<>!_$*€£+=\/;:?#\\\x22\`]+$/", message="Les caractères spéciaux ne sont pas autorisés")
      * @Assert\Length(min=3, max=255, 
      *      minMessage="Le type doit faire plus de {{ limit }} caractères", 
      *      maxMessage="Le type ne peut pas faire plus de {{ limit }} caractères")
