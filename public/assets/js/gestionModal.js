@@ -128,14 +128,14 @@ function addRentalSpaceType() {
          error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir moins de 3 caractères</span></span>";
       } else if (dataDesignation.length > maxSizeDesignation) {
          error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir plus de 255 caractères</span></span>";
+      } else {
+         $("#validateMessageDesignation").html("");
       }
 
       if (error) {
          $("#validateMessageDesignation").html(error);
          e.preventDefault();
          return false;
-      } else {
-         $("#validateMessageDesignation").html("");
       }
    });
 }
@@ -175,21 +175,17 @@ function addCity() {
       var dataPostalCode= $("#city_form_postalCode").val();
       var regExName= /^[^0-9@&"()<>!_$*€£`+=\/;:?#]+$/;
       var regExPostalCode= /^(?:[0-8]\d|9[0-8])\d{3}$/;
-      var minSizeDesignation= 3;
       var maxSizeDesignation= 255;
 
       if (!dataName) {
          errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir une ville</span></span>";
       } else if (!dataName.match(regExName)) {
          errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce nom n'est pas valide</span></span>";
-      } else if (dataName.length < minSizeDesignation) {
-         errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir moins de 3 caractères</span></span>";
       } else if (dataName.length > maxSizeDesignation) {
          errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir plus de 255 caractères</span></span>";
       } else {
          $("#validateMessageName").html("");
       }
-
 
       if (!dataPostalCode) {
          errorPostalCode= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir un code postal</span></span>";
@@ -203,11 +199,7 @@ function addCity() {
          $("#validateMessageName").html(errorName);
          $("#validateMessagePostalCode").html(errorPostalCode);
          e.preventDefault();
-         alert('block');
          return false;
-      } else {
-         $("#validateMessageName").html("");
-         $("#validateMessagePostalCode").html("");
       }
    });
 }
