@@ -19,7 +19,7 @@ class PreventSqlInjection
      * Replace SCRIPT tag with BOLD tag
      */
     function replaceInData($data) {
-        dump($data);
+        dump('Avant => ' . $data);
 
         if(strstr(strtolower($data), "<script")) {
             $data= str_replace("<script", "<b", strtolower($data));
@@ -29,7 +29,7 @@ class PreventSqlInjection
         $data= htmlspecialchars($data, ENT_QUOTES);
         $data= str_replace(";", "__SEMICOLON__", $data);
         
-        dump($data);
+        dump('Après => ' . $data);
         return $data;
     }
 }

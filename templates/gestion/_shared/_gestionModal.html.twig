@@ -1,7 +1,8 @@
 {# ########################################################################################################## #}
 {#                                              MODAL MANAGEMENT                                              #}
 {# ########################################################################################################## #}
-{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+{% set currentPath = path(app.request.attributes.get('_route'), 
+                          app.request.attributes.get('_route_params')) %}
 
 {# START of MODAL #}
 <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">

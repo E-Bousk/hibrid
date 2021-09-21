@@ -31,8 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir un prénom")
      * @Assert\Regex("/^[^0-9@&()<>!_$*€£+=\/;:?#\\\x22\`]+$/", message="Seules les lettres sont autorisées")
-     * @Assert\Length(min=1, max=255, 
-     *      minMessage="Le prénom doit faire plus de {{ limit }} caractères", 
+     * @Assert\Length(max=255, 
      *      maxMessage="Le prénom ne peut pas faire plus de {{ limit }} caractères")
      */
     private $firstName;
@@ -41,8 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Veuillez saisir un nom")
      * @Assert\Regex("/^[^0-9@&()<>!_$*€£+=\/;:?#\\\x22\`]+$/", message="Seules les lettres sont autorisées")
-     * @Assert\Length(min=1, max=255, 
-     *      minMessage="Le nom doit faire plus de {{ limit }} caractères", 
+     * @Assert\Length(max=255, 
      *      maxMessage="Le nom ne peut pas faire plus de {{ limit }} caractères")
      */
     private $lastName;
@@ -70,6 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex("/^[^@&()<>!_$*€£+=\/;:?#\\\x22\`]+$/", message="Les caractères spéciaux ne sont pas autorisés")
      * @Assert\Length(max=255, maxMessage="L'adresse ne peut pas faire plus de {{ limit }} caractères")
      */
     private $address;

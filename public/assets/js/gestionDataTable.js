@@ -149,6 +149,9 @@ const rentalSpaceConfiguration =
             "orderable": true
         },
         {
+            "orderable": true
+        },
+        {
             "data": "tarif mois",
             "render": function(data, type) {
                 var number = $.fn.dataTable.render.number( '.', ',', 0, '€'). display(data);
@@ -171,22 +174,22 @@ const rentalSpaceConfiguration =
             "orderable": false
         }
     ],
-    // "columnDefs": 
-    // [
-    //     {
-    //         // The `data` parameter refers to the data for the cell (defined by the
-    //         // `data` option, which defaults to the column being worked with, in
-    //         // this case `data: 0`.
-    //         "render": function ( data, type, row ) {
-    //             return data +"<br>[Quantité: "+ row[2]+"]";
-    //         },
-    //         "targets": 0
-    //     },
-    //     // La colonne n'est plus affichée
-    //     { 
-    //         "targets": [ 2 ],
-    //         "visible": false
-    //     }
-    // ],
+    "columnDefs": 
+    [
+        {
+            // The 'data' parameter refers to the data for the cell 
+            // (defined by the 'data' option, which defaults to the column being worked with,
+            // in this case 'data: 0').
+            "render": function ( data, type, row ) {
+                return data +"<br>("+ row[2]+")";
+            },
+            "targets": 1
+        },
+        // Colomn is no more diplayed
+        { 
+            "targets": [ 2 ],
+            "visible": false
+        }
+    ],
     "retrieve": true,
 };

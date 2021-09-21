@@ -9,7 +9,9 @@ use App\Security\PreventSqlInjection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class CityController | file CityController.php
@@ -49,21 +51,27 @@ class CityController extends AbstractController
      * Return a page with an empty form
      */
     #[Route('/ajouter', name: 'city_add', methods: ['GET', 'POST'])]
-    public function add(Request $request, PreventSqlInjection $preventSqlInjection): Response
+    public function add(Request $request, PreventSqlInjection $preventSqlInjection, ValidatorInterface $validator): Response
     {
         $city = new City();
         $form = $this->createForm(CityFormType::class, $city);
         $form->handleRequest($request);
 
         /** *************************************
+         **         VALIDATION CONTROL         **
+         ************************************* */
+        $cityValidation= $validator->validate($city);
+        // dd($cityValidation);
+
+
+        /** *************************************
          ** MALICIOUS SQL INJECTION PREVENTION **
-        ************************************* */
-        // Get data to replace potential malicious code
-        $data= $form->getData();
-        // Get, check and set string with the method 'replaceInData'
-        $Name= $data->getName();
-        $nameSafe= $preventSqlInjection->replaceInData($Name);
+         ************************************* */
+        // Replace potential malicious code in NAME
+        $nameSafe= $preventSqlInjection->replaceInData($city->getName());
         $city->setName($nameSafe);
+        
+        // dd($city);
 
 
         // If parameters of request are not empty (filled and submitted form)
@@ -88,12 +96,16 @@ class CityController extends AbstractController
             // Create a CITY from RENTAL SPACE add page
             if ($form->isSubmitted() && $this->isCsrfTokenValid('city_form__token', $submittedToken)) {
 
-                // dd("2 - Ajout depuis l'espace locatif");
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($city);
-                $entityManager->flush();
-    
-                return $this->redirectToRoute('rental_space_add');
+                if ($cityValidation->count() === 0) {
+                    // dd("2 - Ajout depuis l'espace locatif");
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($city);
+                    $entityManager->flush();
+        
+                    return $this->redirectToRoute('rental_space_add');
+                } else {
+                    return $this->redirectToRoute('rental_space_add');
+                }
             }
         }
 

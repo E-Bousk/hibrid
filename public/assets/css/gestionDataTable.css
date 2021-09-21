@@ -5,7 +5,9 @@
 /* ********************************* */
 /*               COMMON              */
 /* ********************************* */
-#RentalSpaceDataTable, #CityDataTable, #RentalSpaceTypeDataTable {
+#RentalSpaceDataTable,
+#CityDataTable,
+#RentalSpaceTypeDataTable {
   width: 100% !important;
 }
 

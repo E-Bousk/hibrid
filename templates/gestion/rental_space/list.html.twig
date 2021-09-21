@@ -23,6 +23,7 @@
                 <tr>
                     <th>Designation</th>
                     <th>Ville</th>
+                    <th>Code postal</th>
                     <th>Quantité</th>
                     <th>Durée minimale</th>
                     <th>Durée maximale</th>
@@ -37,7 +38,8 @@
             {% for rental_space in rental_spaces %}
                 <tr>
                     <td>{{ rental_space.rentalSpaceType }}</td>
-                    <td>{{ rental_space.city }}</td>
+                    <td>{{ rental_space.city.name }}</td>
+                    <td>{{ rental_space.city.postalCode }}</td>
                     <td>{{ rental_space.quantity }}</td>
                     <td>{{ rental_space.minimumDurationRule }}&nbsp;heures</td>
                     <td>{{ rental_space.maximumDurationRule }}&nbsp;heures</td>
