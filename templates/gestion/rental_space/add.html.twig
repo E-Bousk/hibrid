@@ -10,10 +10,10 @@
 {% block body %}
 <div class="row">
     <div class="col-md-6 mx-auto">
-         <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Ajouter un nouvel espace locatif</h1>
-
+        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Ajouter un nouvel espace locatif</h1>
         <div class="px-2 pb-3 rounded surrounding">
-            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {# {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }} #}
+            {{ form_start(form) }}
 
             {{ form_row(form.rentalSpaceType) }}
             <p onClick="addRentalSpaceType()" class="mt-3 btn btn-success" data-bs-toggle="modal" data-bs-target="#Modal"><i class="fas fa-plus-circle"></i> Ajouter un type d'espace locatif</p>

@@ -30,7 +30,7 @@ class LoginFormType extends AbstractType
                 'label' => 'Adresse email :',
                 'attr' => [
                     'placeholder' => 'Adresse email de connexion',
-                    'novalidate' => 'novalidate'
+                    // 'novalidate' => 'novalidate'
                 ]
             ])
             ->add('password', PasswordType::class, [

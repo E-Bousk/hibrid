@@ -9,6 +9,7 @@ use App\Repository\RentalSpaceTypeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -49,20 +50,22 @@ class RentalSpaceTypeController extends AbstractController
      * Return a page with an empty form
      */
     #[Route('/ajouter', name: 'rental_space_type_add', methods: ['GET', 'POST'])]
-    public function add(Request $request, PreventSqlInjection $preventSqlInjection): Response
+    public function add(Request $request, PreventSqlInjection $preventSqlInjection, ValidatorInterface $validator): Response
     {
         $rentalSpaceType = new RentalSpaceType();
         $form = $this->createForm(RentalSpaceTypeFormType::class, $rentalSpaceType);
         $form->handleRequest($request);
 
         /** *************************************
+         **         VALIDATION CONTROL         **
+         ************************************* */
+        $rentalSpaceTypeValidation= $validator->validate($rentalSpaceType);
+
+        /** *************************************
          ** MALICIOUS SQL INJECTION PREVENTION **
         ************************************* */
-        // Get data to replace potential malicious code
-        $data= $form->getData();
-        // Get, check and set string with the method 'replaceInData'
-        $designation= $data->getDesignation();
-        $designationSafe= $preventSqlInjection->replaceInData($designation);
+        // Replace potential malicious code in TYPE
+        $designationSafe= $preventSqlInjection->replaceInData($rentalSpaceType->getDesignation());
         $rentalSpaceType->setDesignation($designationSafe);
 
         // If parameters of request are not empty (filled and submitted form)
@@ -87,12 +90,18 @@ class RentalSpaceTypeController extends AbstractController
             // Create a RENTAL SPACE TYPE from RENTAL SPACE add page
             if ($form->isSubmitted() && $this->isCsrfTokenValid('rental_space_type_form__token', $submittedToken)) {
 
-                // dd("2 - Ajout depuis l'espace locatif");
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($rentalSpaceType);
-                $entityManager->flush();
-    
-                return $this->redirectToRoute('rental_space_add');
+                if ($rentalSpaceTypeValidation->count() === 0) {
+                    // dd("2 - Ajout depuis l'espace locatif");
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($rentalSpaceType);
+                    $entityManager->flush();
+
+                    $this->addFlash("success", "Le type d'espace locatif '$rentalSpaceType' à bien été ajouté");
+                    return $this->redirectToRoute('rental_space_add');
+                } else {
+                    $this->addFlash("success", "Un problème est survenu lors de l'ajout du type d'espace locatif '$rentalSpaceType'");
+                    return $this->redirectToRoute('rental_space_add');
+                }
             }
         }
         

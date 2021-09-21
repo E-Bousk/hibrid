@@ -17,9 +17,12 @@ class PreventSqlInjection
     /**
      * Replace quote and semicolon with HTML entities
      * Replace SCRIPT tag with BOLD tag
+     * 
+     * @return string
      */
-    function replaceInData($data) {
-        dump('Avant => ' . $data);
+    function replaceInData(? string $data) :string
+    {
+        // dump('Avant => ' . $data);
 
         if(strstr(strtolower($data), "<script")) {
             $data= str_replace("<script", "<b", strtolower($data));
@@ -29,7 +32,8 @@ class PreventSqlInjection
         $data= htmlspecialchars($data, ENT_QUOTES);
         $data= str_replace(";", "__SEMICOLON__", $data);
         
-        dump('Après => ' . $data);
+        // dump('Après => ' . $data);
+        
         return $data;
     }
 }

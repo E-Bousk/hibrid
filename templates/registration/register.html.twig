@@ -16,8 +16,8 @@
         {% endfor %}
 
         <div class="px-2 pb-3 rounded surrounding">
-            {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
-            {# {{ form_start(registrationForm) }} #}
+            {# {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }} #}
+            {{ form_start(registrationForm) }}
             <div class="row">
                 <div class="col-md-6">
                     {{ form_row(registrationForm.firstName) }}

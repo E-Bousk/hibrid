@@ -63,7 +63,6 @@ class CityController extends AbstractController
         $cityValidation= $validator->validate($city);
         // dd($cityValidation);
 
-
         /** *************************************
          ** MALICIOUS SQL INJECTION PREVENTION **
          ************************************* */
@@ -102,8 +101,10 @@ class CityController extends AbstractController
                     $entityManager->persist($city);
                     $entityManager->flush();
         
+                    $this->addFlash("success", "La ville '$city' à bien été ajoutée");
                     return $this->redirectToRoute('rental_space_add');
                 } else {
+                    $this->addFlash("success", "Un problème est survenu lors de l'ajout de la ville '$city'");
                     return $this->redirectToRoute('rental_space_add');
                 }
             }
