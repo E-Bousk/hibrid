@@ -203,3 +203,36 @@ function addCity() {
       }
    });
 }
+// ########################################################### //
+// #####                  END OF MODAL                   ##### //
+// ########################################################### // 
+
+// ########################################################### //
+// #####                RENTAL SPACE PAGE                ##### //
+// #####              last entry on SELECT               ##### //
+// ########################################################### // 
+
+$(document).ready(function () {
+   
+   var idCityToSelect= $("#idCityToSelect").data("id-city-to-select");
+   var idTypeToSelect= $("#idTypeToSelect").data("id-type-to-select");
+
+   console.log('City ID : ' + idCityToSelect)
+   console.log('Type ID : ' + idTypeToSelect);
+
+   if (idCityToSelect) {
+
+      console.log("dans le if " + idCityToSelect);
+
+      $('#rental_space_form_city option[value=' + idCityToSelect + ']').prop('selected', true);
+   
+   }
+   
+   if (idTypeToSelect) {
+
+      console.log("dans le if " + idTypeToSelect);
+
+      $('#rental_space_form_rentalSpaceType option[value=' + idTypeToSelect + ']').prop('selected', true);
+   
+   } 
+});

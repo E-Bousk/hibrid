@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -50,7 +51,7 @@ class RentalSpaceTypeController extends AbstractController
      * Return a page with an empty form
      */
     #[Route('/ajouter', name: 'rental_space_type_add', methods: ['GET', 'POST'])]
-    public function add(Request $request, PreventSqlInjection $preventSqlInjection, ValidatorInterface $validator): Response
+    public function add(Request $request, PreventSqlInjection $preventSqlInjection, ValidatorInterface $validator, SessionInterface $session): Response
     {
         $rentalSpaceType = new RentalSpaceType();
         $form = $this->createForm(RentalSpaceTypeFormType::class, $rentalSpaceType);
@@ -96,10 +97,14 @@ class RentalSpaceTypeController extends AbstractController
                     $entityManager->persist($rentalSpaceType);
                     $entityManager->flush();
 
+                    $session->remove('addedType');
+                    $session->set('addedType', $rentalSpaceType->getId());
+                    // dd($session->get('addedType'));
+
                     $this->addFlash("success", "Le type d'espace locatif '$rentalSpaceType' à bien été ajouté");
                     return $this->redirectToRoute('rental_space_add');
                 } else {
-                    $this->addFlash("success", "Un problème est survenu lors de l'ajout du type d'espace locatif '$rentalSpaceType'");
+                    $this->addFlash("error", "Un problème est survenu lors de l'ajout du type d'espace locatif '$rentalSpaceType'");
                     return $this->redirectToRoute('rental_space_add');
                 }
             }

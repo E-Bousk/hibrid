@@ -9,9 +9,10 @@ use App\Security\PreventSqlInjection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class CityController | file CityController.php
@@ -42,7 +43,6 @@ class CityController extends AbstractController
         ]);
     }
 
-
     /**
      * City management page
      * 
@@ -51,7 +51,7 @@ class CityController extends AbstractController
      * Return a page with an empty form
      */
     #[Route('/ajouter', name: 'city_add', methods: ['GET', 'POST'])]
-    public function add(Request $request, PreventSqlInjection $preventSqlInjection, ValidatorInterface $validator): Response
+    public function add(Request $request, PreventSqlInjection $preventSqlInjection, ValidatorInterface $validator, SessionInterface $session): Response
     {
         $city = new City();
         $form = $this->createForm(CityFormType::class, $city);
@@ -70,9 +70,6 @@ class CityController extends AbstractController
         $nameSafe= $preventSqlInjection->replaceInData($city->getName());
         $city->setName($nameSafe);
         
-        // dd($city);
-
-
         // If parameters of request are not empty (filled and submitted form)
         if ($request->request->get('city_form')) {
 
@@ -100,11 +97,16 @@ class CityController extends AbstractController
                     $entityManager = $this->getDoctrine()->getManager();
                     $entityManager->persist($city);
                     $entityManager->flush();
-        
+                    
+                    // Store the new ID on SESSION to get this city on SELECT on the RENTAL SPACE add page
+                    $session->remove('addedCity');
+                    $session->set('addedCity', $city->getId());
+                    // dd($session->get('addedCity'));
+                    
                     $this->addFlash("success", "La ville '$city' à bien été ajoutée");
                     return $this->redirectToRoute('rental_space_add');
                 } else {
-                    $this->addFlash("success", "Un problème est survenu lors de l'ajout de la ville '$city'");
+                    $this->addFlash("error", "Un problème est survenu lors de l'ajout de la ville '$city'");
                     return $this->redirectToRoute('rental_space_add');
                 }
             }

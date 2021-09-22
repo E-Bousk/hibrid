@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class RentalSpaceController | file RentalSpaceController.php
@@ -48,7 +49,7 @@ class RentalSpaceController extends AbstractController
      * Return a page with an empty form
      */
     #[Route('/ajouter', name: 'rental_space_add', methods: ['GET', 'POST'])]
-    public function add(Request $request): Response
+    public function add(Request $request, SessionInterface $session): Response
     {
         $rentalSpace = new RentalSpace();
         $form = $this->createForm(RentalSpaceFormType::class, $rentalSpace);
@@ -58,6 +59,11 @@ class RentalSpaceController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($rentalSpace);
             $entityManager->flush();
+
+            // delete (potential) IDs stored in SESSION
+            // dd($session->get('addedCity'), $session->get('addedType'));
+            $session->remove('addedCity');
+            $session->remove('addedType');
 
             return $this->redirectToRoute('rental_space_list');
         }
