@@ -101,10 +101,10 @@ class RentalSpaceTypeController extends AbstractController
                     $session->set('addedType', $rentalSpaceType->getId());
                     // dd($session->get('addedType'));
 
-                    $this->addFlash("success", "Le type d'espace locatif '$rentalSpaceType' à bien été ajouté");
+                    $this->addFlash("add_success", sprintf("Le type d'espace locatif '%s' à bien été ajouté", $rentalSpaceType));
                     return $this->redirectToRoute('rental_space_add');
                 } else {
-                    $this->addFlash("error", "Un problème est survenu lors de l'ajout du type d'espace locatif '$rentalSpaceType'");
+                    $this->addFlash("add_error", sprintf("Un problème est survenu lors de l'ajout du type d'espace locatif '%s'", $rentalSpaceType));
                     return $this->redirectToRoute('rental_space_add');
                 }
             }

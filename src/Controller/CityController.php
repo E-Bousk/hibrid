@@ -103,10 +103,10 @@ class CityController extends AbstractController
                     $session->set('addedCity', $city->getId());
                     // dd($session->get('addedCity'));
                     
-                    $this->addFlash("success", "La ville '$city' à bien été ajoutée");
+                    $this->addFlash("add_success", sprintf("La ville '%s' (%s) à bien été ajoutée", $city->getName(), $city->getPostalCode()));
                     return $this->redirectToRoute('rental_space_add');
                 } else {
-                    $this->addFlash("error", "Un problème est survenu lors de l'ajout de la ville '$city'");
+                    $this->addFlash("add_error",  sprintf("Un problème est survenu lors de l'ajout de la ville '%s' (%s)", $city->getName(), $city->getPostalCode()));
                     return $this->redirectToRoute('rental_space_add');
                 }
             }

@@ -11,17 +11,26 @@
 <div class="row">
     <div class="col-md-6 mx-auto">
         <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Ajouter un nouvel espace locatif</h1>
+        
+        {% for flashLabel, flashMessages in app.flashes(['add_success', 'add_error']) %}
+            {% for flashMessage in flashMessages %}
+                {% if 'add_success' in flashLabel %}
+                    <div class="mb-3 alert alert-success rounded text-break" role="alert">{{ flashMessage }}</div>
+                {% elseif 'add_error' in flashLabel %}
+                    <div class="mb-3 alert alert-error rounded text-break" role="alert">{{ flashMessage }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        
         <div class="px-2 pb-3 rounded surrounding">
 
         {% set idCityToSelect = app.session.get('addedCity') %}
         {% if idCityToSelect is not empty %}
-            {{ dump(idCityToSelect) }}
             <input id="idCityToSelect" type="hidden" data-id-city-to-select="{{ idCityToSelect }}">
         {% endif %}
 
         {% set idTypeToSelect = app.session.get('addedType') %}
         {% if idTypeToSelect is not empty %}
-            {{ dump(idTypeToSelect) }}
             <input id="idTypeToSelect" type="hidden" data-id-type-to-select="{{ idTypeToSelect }}">
         {% endif %}
         
