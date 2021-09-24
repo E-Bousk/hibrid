@@ -28,8 +28,12 @@ class RentalSpaceFormType extends AbstractType
 {
     /**
      * build the form : add label, constraints, placeholder etc...
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('rentalSpaceType', EntityType::class, [
@@ -121,7 +125,13 @@ class RentalSpaceFormType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    /**
+     * Associate the form with RENTAL SPACE entity
+     *
+     * @param OptionsResolver $resolver
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => RentalSpace::class

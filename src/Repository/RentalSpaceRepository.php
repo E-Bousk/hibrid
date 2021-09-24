@@ -7,6 +7,12 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Class RentalSpaceRepository | file RentalSpaceRepository.php
+ *
+ * In this class, we have method(s) for :
+ * 
+ * fetching data from RENTAL SPACE entity on database
+ * 
  * @method RentalSpace|null find($id, $lockMode = null, $lockVersion = null)
  * @method RentalSpace|null findOneBy(array $criteria, array $orderBy = null)
  * @method RentalSpace[]    findAll()

@@ -10,6 +10,13 @@ use SymfonyCasts\Bundle\ResetPassword\Persistence\Repository\ResetPasswordReques
 use SymfonyCasts\Bundle\ResetPassword\Persistence\ResetPasswordRequestRepositoryInterface;
 
 /**
+ * Class ResetPasswordRequestRepository | file ResetPasswordRequestRepository.php
+ *
+ * In this class, we have methods for :
+ * 
+ * fetching data from RESET PASWORD REQUEST entity on database
+ * Creating a requet to reset password
+ * 
  * @method ResetPasswordRequest|null find($id, $lockMode = null, $lockVersion = null)
  * @method ResetPasswordRequest|null findOneBy(array $criteria, array $orderBy = null)
  * @method ResetPasswordRequest[]    findAll()
@@ -24,6 +31,15 @@ class ResetPasswordRequestRepository extends ServiceEntityRepository implements 
         parent::__construct($registry, ResetPasswordRequest::class);
     }
 
+    /**
+     * Create a requet to reset password
+     *
+     * @param object $user
+     * @param \DateTimeInterface $expiresAt
+     * @param string $selector
+     * @param string $hashedToken
+     * @return ResetPasswordRequestInterface
+     */
     public function createResetPasswordRequest(object $user, \DateTimeInterface $expiresAt, string $selector, string $hashedToken): ResetPasswordRequestInterface
     {
         return new ResetPasswordRequest($user, $expiresAt, $selector, $hashedToken);

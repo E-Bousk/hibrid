@@ -21,11 +21,12 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 /**
  * Class RegistrationController | file RegistrationController.php
  *
- * In this class, we have method for :
+ * In this class, we have methods for :
  *
  * Displaying the registration page
  * Registering
  * Verifiying email
+ * escaping potential SQL injection
  * 
  */
 class RegistrationController extends AbstractController
@@ -41,6 +42,12 @@ class RegistrationController extends AbstractController
 
     /**
      * Registration page
+     * 
+     * @param Request $request
+     * @param UserPasswordHasherInterface $passwordEncoder
+     * @param GuardAuthenticatorHandler $guardHandler
+     * @param LoginFormAuthenticator $authenticator
+     * @return Response
      */
     #[Route('/register', name: 'app_register')]
     public function register(
@@ -127,6 +134,10 @@ class RegistrationController extends AbstractController
 
     /**
      * Verify email page
+     *
+     * @param Request $request
+     * @param TranslatorInterface $translator
+     * @return Response
      */
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator ): Response

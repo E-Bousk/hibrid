@@ -20,6 +20,8 @@ class HomeController extends AbstractController
     /**
      * Set path for homepage
      * Create view to display the homepage
+     * 
+     * @return Response
      */
     #[Route('/', name: 'homepage')]
     public function index(): Response

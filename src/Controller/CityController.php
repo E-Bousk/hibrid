@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * Class CityController | file CityController.php
  *
- * In this class, we have method for :
+ * In this class, we have methods for :
  *
  * C.reate: creating a new city with add() method
  * R.ead: displaying the cities with list() method
@@ -28,11 +28,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/admin/gestion/villes')]
 class CityController extends AbstractController
 {
+
     /**
      * City management page
      * 
      * List all cities from database
      * Return a page to display them on a (data)table 
+     *
+     * @param CityRepository $cityRepository
+     * @return Response
      */
     #[Route('/', name: 'city_list', methods: ['GET'])]
     public function list(CityRepository $cityRepository): Response
@@ -47,8 +51,13 @@ class CityController extends AbstractController
      * City management page
      * 
      * Insert a new city in the database
-     * 
      * Return a page with an empty form
+     * 
+     * @param Request $request
+     * @param PreventSqlInjection $preventSqlInjection
+     * @param ValidatorInterface $validator
+     * @param SessionInterface $session
+     * @return Response
      */
     #[Route('/ajouter', name: 'city_add', methods: ['GET', 'POST'])]
     public function add(Request $request, PreventSqlInjection $preventSqlInjection, ValidatorInterface $validator, SessionInterface $session): Response
@@ -122,8 +131,11 @@ class CityController extends AbstractController
      * City management page
      * 
      * Editing an existing city in the database
-     * 
      * Return a page with a fully filled fields form
+     * 
+     * @param Request $request
+     * @param City $city
+     * @return Response
      */
     #[Route('/{id}/editer', name: 'city_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, City $city): Response
@@ -145,11 +157,13 @@ class CityController extends AbstractController
 
     /**
      * City management page
-     * 
      * Deleting an existing city in the database
      * Verifying CSRF token before deleting
-     * 
      * Return a page with a modal confirmation
+     * 
+     * @param Request $request
+     * @param City $city
+     * @return Response
      */
     #[Route('/{id}/supprimer', name: 'city_delete', methods: ['POST', 'GET'])]
     public function delete(Request $request, City $city): Response

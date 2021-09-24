@@ -17,7 +17,8 @@ class PreventSqlInjection
     /**
      * Replace quote and semicolon with HTML entities
      * Replace SCRIPT tag with BOLD tag
-     * 
+     *
+     * @param string|null $data
      * @return string
      */
     function replaceInData(? string $data) :string

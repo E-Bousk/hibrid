@@ -10,8 +10,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * Class ChangePasswordFormType | file ChangePasswordFormType.php
+ *
+ * This class is used to create form for the password-reset changing page
+ * In this class, we have methods for :
+ *
+ * Building the form to send it to view
+ * Using constraints to validate submition
+ * Adding options if needed (associate with entity for exemple)
+ */
 class ChangePasswordFormType extends AbstractType
 {
+    /**
+     * build the form : add label, constraints, placeholder etc...
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -29,7 +46,7 @@ class ChangePasswordFormType extends AbstractType
                             'message' => 'Veuillez saisir un mot de passe',
                         ]),
                         new Length([
-                            'min' => 4,
+                            'min' => 8,
                             'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
                             // max length allowed by Symfony for security reasons
                             'max' => 4096,
@@ -50,6 +67,12 @@ class ChangePasswordFormType extends AbstractType
         ;
     }
 
+    /**
+     * No option needed here
+     *
+     * @param OptionsResolver $resolver
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([]);

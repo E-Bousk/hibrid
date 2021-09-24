@@ -7,6 +7,12 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Class CityRepository | file CityRepository.php
+ *
+ * In this class, we have method(s) for :
+ * 
+ * fetching data from CITY entity on database
+ * 
  * @method City|null find($id, $lockMode = null, $lockVersion = null)
  * @method City|null findOneBy(array $criteria, array $orderBy = null)
  * @method City[]    findAll()

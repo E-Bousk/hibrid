@@ -16,7 +16,9 @@ use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
  * This class is used to send a confirmation email to verify it
  * In this class, we have methods for :
  *
- * sending an email confirmation
+ * Sending an email confirmation
+ * Handle an email confirmation
+ * Setting IS_VERIFIED on TRUE on USER in database
  * 
  */
 class EmailVerifier
@@ -32,6 +34,14 @@ class EmailVerifier
         $this->entityManager = $manager;
     }
 
+    /**
+     * send an email confirmation
+     *
+     * @param string $verifyEmailRouteName
+     * @param UserInterface $user
+     * @param TemplatedEmail $email
+     * @return void
+     */
     public function sendEmailConfirmation(string $verifyEmailRouteName, UserInterface $user, TemplatedEmail $email): void
     {
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
@@ -51,7 +61,14 @@ class EmailVerifier
     }
 
     /**
+     * Handle email confirmation
+     * Set IS VERIFIED to true on USER in database
+     *
      * @throws VerifyEmailExceptionInterface
+     * 
+     * @param Request $request
+     * @param UserInterface $user
+     * @return void
      */
     public function handleEmailConfirmation(Request $request, UserInterface $user): void
     {

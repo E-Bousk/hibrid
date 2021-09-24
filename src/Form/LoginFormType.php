@@ -22,8 +22,12 @@ class LoginFormType extends AbstractType
 {
     /**
      * build the form : add label, placeholder etc...
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('email', EmailType::class, [
@@ -42,9 +46,11 @@ class LoginFormType extends AbstractType
     }
 
     /**
-     * No option here
+     * No option needed here
+     * @param OptionsResolver $resolver
+     * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             // Configure your form options here

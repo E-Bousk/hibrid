@@ -22,9 +22,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class RentalSpaceTypeFormType extends AbstractType
 {
     /**
-     * build the form : add label, constraints, placeholder etc...
+     * build the form : add label, placeholder etc...
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('designation', TextType::class, [
@@ -36,7 +40,13 @@ class RentalSpaceTypeFormType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    /**
+     * Associate the form with RENTAL SPACE TYPE entity
+     *
+     * @param OptionsResolver $resolver
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => RentalSpaceType::class

@@ -25,7 +25,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AppFixtures extends Fixture
 {
     /**
-     * protected $encoder is used to get encoder object to hash password
+     * protected $encoder is used to get instance of UserPasswordHasherInterface to hash password
      */
     protected $encoder;
 
@@ -42,8 +42,9 @@ class AppFixtures extends Fixture
     /**
      * Use FAKER to create dummy data
      * Use ORM DOCTRINE to add data on database
-     * 
+     *
      * @param ObjectManager $manager
+     * @return void
      */
     public function load(ObjectManager $manager)
     {

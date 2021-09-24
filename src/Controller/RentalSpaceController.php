@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 /**
  * Class RentalSpaceController | file RentalSpaceController.php
  *
- * In this class, we have method for :
+ * In this class, we have methods for :
  *
  * C.reate: creating a new rental space with add() method
  * R.ead: displaying the rental spaces with list() method
@@ -29,9 +29,12 @@ class RentalSpaceController extends AbstractController
      * Rental space management page
      * 
      * List all rental spaces from database
-     * Return a page to display them on a (data)table 
+     * Return a page to display them on a (data)table
+     *
+     * @param RentalSpaceRepository $rentalSpaceRepository
+     * @return Response
      */
-    #[Route('/', name: 'rental_space_list', methods: ['GET'])]
+    #[Route('', name: 'rental_space_list', methods: ['GET'])]
     public function list(RentalSpaceRepository $rentalSpaceRepository): Response
     {
 
@@ -40,13 +43,15 @@ class RentalSpaceController extends AbstractController
         ]);
     }
 
-
     /**
      * Rental space management page
      * 
      * Insert a new rental space in the database
-     * 
      * Return a page with an empty form
+     *
+     * @param Request $request
+     * @param SessionInterface $session
+     * @return Response
      */
     #[Route('/ajouter', name: 'rental_space_add', methods: ['GET', 'POST'])]
     public function add(Request $request, SessionInterface $session): Response
@@ -78,8 +83,11 @@ class RentalSpaceController extends AbstractController
      * Rental space management page
      * 
      * Editing an existing rental space in the database
-     * 
      * Return a page with a fully filled fields form
+     * 
+     * @param Request $request
+     * @param RentalSpace $rentalSpace
+     * @return Response
      */
     #[Route('/{id}/editer', name: 'rental_space_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, RentalSpace $rentalSpace): Response
@@ -104,8 +112,11 @@ class RentalSpaceController extends AbstractController
      * 
      * Deleting an existing rental space in the database
      * Verifying CSRF token before deleting
-     * 
      * Return a page with a modal confirmation
+     * 
+     * @param Request $request
+     * @param RentalSpace $rentalSpace
+     * @return Response
      */
     #[Route('/{id}/supprimer', name: 'rental_space_delete', methods: ['POST', 'GET'])]
     public function delete(Request $request, RentalSpace $rentalSpace): Response

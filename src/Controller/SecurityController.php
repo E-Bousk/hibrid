@@ -11,7 +11,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 /**
  * Class SecurityController | file SecurityController.php
  *
- * In this class, we have method for :
+ * In this class, we have methods for :
  *
  * Displaying the login page
  * Create the login form
@@ -23,6 +23,9 @@ class SecurityController extends AbstractController
     /**
      * Set the path
      * Create the login form and the view for the Login Page
+     *
+     * @param AuthenticationUtils $utils
+     * @return Response
      */
     #[Route('/login', name: 'security_login')]
     public function login(AuthenticationUtils $utils): Response
@@ -43,6 +46,8 @@ class SecurityController extends AbstractController
 
     /**
      * Set the path for Logout
+     * 
+     * @return void
      */
     #[Route('/logout', name: 'security_logout')]
     public function logout() {
