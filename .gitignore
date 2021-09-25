@@ -19,4 +19,8 @@
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 
-
+###> phpdoc ###
+/Docs/
+.phpdoc/
+/bin/phpDoc.phar
+###< phpdoc ###
