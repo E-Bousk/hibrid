@@ -58,11 +58,13 @@ class RentalSpace
 
     /**
      * @ORM\ManyToOne(targetEntity=RentalSpaceType::class, inversedBy="rentalSpaces")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $rentalSpaceType;
 
     /**
      * @ORM\ManyToOne(targetEntity=City::class, inversedBy="rentalSpaces")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $city;
 

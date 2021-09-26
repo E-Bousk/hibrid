@@ -20,7 +20,7 @@
 ###< phpunit/phpunit ###
 
 ###> phpdoc ###
-/Docs/
+/docs/
 .phpdoc/
-/bin/phpDoc.phar
+/bin/phpdoc
 ###< phpdoc ###

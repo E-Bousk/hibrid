@@ -120,16 +120,25 @@ function addRentalSpaceType() {
       var minSizeDesignation= 3;
       var maxSizeDesignation= 255;
 
-      if (!dataDesignation) {
-         error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir un type d'espace locatif</span></span>";
-      } else if (!dataDesignation.match(regExDesignation)) {
-         error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Les caractères spéciaux ne sont pas autorisés</span></span>";
-      } else if (dataDesignation.length < minSizeDesignation) {
-         error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir moins de 3 caractères</span></span>";
-      } else if (dataDesignation.length > maxSizeDesignation) {
-         error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir plus de 255 caractères</span></span>";
-      } else {
-         $("#validateMessageDesignation").html("");
+      switch (true) {
+         case !dataDesignation :
+            error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir un type d'espace locatif</span></span>";
+            break;
+            
+         case !dataDesignation.match(regExDesignation) :
+            error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Les caractères spéciaux ne sont pas autorisés</span></span>";
+            break;
+            
+         case dataDesignation.length < minSizeDesignation :
+            error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir moins de 3 caractères</span></span>";
+            break;
+         
+         case dataDesignation.length > maxSizeDesignation :
+            error= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir plus de 255 caractères</span></span>";
+            break;
+
+         default:
+            $("#validateMessageDesignation").html("");
       }
 
       if (error) {
@@ -177,24 +186,36 @@ function addCity() {
       var regExPostalCode= /^(?:[0-8]\d|9[0-8])\d{3}$/;
       var maxSizeDesignation= 255;
 
-      if (!dataName) {
-         errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir une ville</span></span>";
-      } else if (!dataName.match(regExName)) {
-         errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce nom n'est pas valide</span></span>";
-      } else if (dataName.length > maxSizeDesignation) {
-         errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir plus de 255 caractères</span></span>";
-      } else {
-         $("#validateMessageName").html("");
+      switch (true) {
+         case !dataName :
+            errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir une ville</span></span>";
+            break;
+
+         case !dataName.match(regExName) :
+            errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce nom n'est pas valide</span></span>";
+            break;
+
+         case dataName.length > maxSizeDesignation :
+            errorName= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce champ ne peut contenir plus de 255 caractères</span></span>";
+            break;
+      
+         default:
+            $("#validateMessageName").html("");
+      }
+     
+      switch (true) {
+         case !dataPostalCode :
+            errorPostalCode= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir un code postal</span></span>";
+            break;
+
+         case !dataPostalCode.match(regExPostalCode) :
+            errorPostalCode= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce code postal n'est pas valide</span></span>";
+            break;
+      
+         default:
+            $("#validateMessagePostalCode").html("");
       }
 
-      if (!dataPostalCode) {
-         errorPostalCode= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Veuillez saisir un code postal</span></span>";
-      } else if (!dataPostalCode.match(regExPostalCode)) {
-         errorPostalCode= "<span class=\"d-block\"><span class=\"me-1 form-error-icon badge badge-danger-modal text-uppercase\">Erreur</span><span class=\"form-error-message\">Ce code postal n'est pas valide</span></span>";
-      } else {
-         $("#validateMessagePostalCode").html("");
-      }
-      
       if (errorName || errorPostalCode) {
          $("#validateMessageName").html(errorName);
          $("#validateMessagePostalCode").html(errorPostalCode);
@@ -203,6 +224,7 @@ function addCity() {
       }
    });
 }
+
 // ########################################################### //
 // #####                  END OF MODAL                   ##### //
 // ########################################################### // 
@@ -216,23 +238,16 @@ $(document).ready(function () {
    
    var idCityToSelect= $("#idCityToSelect").data("id-city-to-select");
    var idTypeToSelect= $("#idTypeToSelect").data("id-type-to-select");
-
-   console.log('City ID : ' + idCityToSelect)
-   console.log('Type ID : ' + idTypeToSelect);
+   // console.log('City ID : ' + idCityToSelect);
+   // console.log('Type ID : ' + idTypeToSelect);
 
    if (idCityToSelect) {
-
-      console.log("dans le if " + idCityToSelect);
-
+      // console.log("dans le if " + idCityToSelect);
       $('#rental_space_form_city option[value=' + idCityToSelect + ']').prop('selected', true);
-   
-   }
+      }
    
    if (idTypeToSelect) {
-
-      console.log("dans le if " + idTypeToSelect);
-
+      // console.log("dans le if " + idTypeToSelect);
       $('#rental_space_form_rentalSpaceType option[value=' + idTypeToSelect + ']').prop('selected', true);
-   
    } 
 });

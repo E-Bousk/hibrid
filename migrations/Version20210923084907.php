@@ -8,7 +8,17 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * Class Version20210923084907 | file Version20210923084907.php
+ *
+ * This class is used to modify TELEPHONE tables on database with DOCTRINE ORM
+ * and to create RESET PASSWORD REQUEST table on database
+ * In this class, we have methods for :
+ *
+ * Adding a description of database modification
+ * Sending SQL request to modify the TELEPHONE tables on database
+ * Sending SQL request to create RESET PASSWORD REQUEST table on the database
+ * Getting back to previous state (cancelling modification)
+ * 
  */
 final class Version20210923084907 extends AbstractMigration
 {
