@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Profil' %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary">Profil</h1>
+
+        <div class="px-2 text-center rounded surrounding">
+            <h2 class="pt-2 text-white">{{ app.user.fullName }}</h2>
+            <hr>
+            <p class="lead"><u>Adresse email: </u><br>{{ app.user.email }}</p>
+            <p class="lead"><u>Adresse : </u><br><span class="h6 text-white">{{ app.user.address }}</span></p>
+            <p class="lead"><u>Téléphone fixe: </u><br><span class="h6 text-white">{{ app.user.telephone1 }}</span></p>
+            <p class="pb-3 lead"><u>Téléphone mobile: </u><br><span class="h6 text-white">{{ app.user.telephone2 }}</span></p>
+        </div>
+        <p class="mt-3 text-center rounded surrounding"><a class="mx-3 surroundingLink" href="{{ path('app_account_edit') }}">Modifier le profil</a><a class="mx-3 surroundingLink" href="#">Modifier le mot de passe</a></p>
+    </div>
+</div>
+{% endblock %}
