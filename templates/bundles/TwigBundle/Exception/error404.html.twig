@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Page introuvable' %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <h1 class="mt-5 mb-3 py-1 h4 text-center card text-white bg-primary">Page introuvable</h1>
+        <div class="px-2 text-center rounded surrounding">
+            <p class="h4 pt-2 text-white">La page demandée n'existe pas (plus)</p>
+            <p class="pb-3">Veuillez vérifier l'adresse ou <a class="surroundingLink" href="{{ path('homepage') }}">retournez à la page d'accueil</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
