@@ -6,6 +6,7 @@
 parameters:
     app.mail_from_address: 'noreply@synerg-in.com'
     app.mail_from_name: 'Synerg-in Email Bot'
+    kernel.http_method_override:   true 
 
 services:
     # default configuration for services in *this* file

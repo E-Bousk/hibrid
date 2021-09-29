@@ -130,21 +130,25 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
-        // /* on success, go to homepage */
-        // return new RedirectResponse('/');
-        $user= $this->entityManager->getRepository(User::class)->findOneBy(['email' => $token->getUser()->getUsername()]);
+        $user= $this->entityManager->getRepository(User::class)->findOneBy(['email' => $token->getUser()->getUserIdentifier()]);
+
         $this->flashBag->add('success', 'Bienvenue ' . $user->getFullName() . ' !');
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
 
+        /* on success, if 'ROLE' = 'ADMIN', redirect to admin dashboard */
+        if (in_array("ROLE_ADMIN", $user->getRoles())) {
+            return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
+        }
+        /* else redirect to homepage */
         return new RedirectResponse($this->urlGenerator->generate('homepage'));
     }
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        /* on failure, go back to login page */
+        /* on failure, go (back) to login page */
         $this->flashBag->add('error', "Vous devez d'abord vous connecter");
         return new RedirectResponse('/login');
     }

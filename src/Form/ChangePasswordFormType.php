@@ -3,12 +3,13 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 /**
  * Class ChangePasswordFormType | file ChangePasswordFormType.php
@@ -18,7 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  *
  * Building the form to send it to view
  * Using constraints to validate submition
- * Adding options if needed (associate with entity for exemple)
+ * Creating an option to decide to display 'current password' form or not
  */
 class ChangePasswordFormType extends AbstractType
 {
@@ -31,6 +32,24 @@ class ChangePasswordFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        if ($options['current_password_is_required']) {
+            $builder
+                ->add('currentPassword', PasswordType::class, [
+                    'label' => 'Mot de passe courant:',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                        'placeholder' => 'mot de passe courant'                    
+                    ],
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Veuillez indiquer votre mot de passe courant',
+                        ]),
+                        new UserPassword(['message' => 'Mot de passe courant invalide !'])
+                    ],
+                ])
+            ;
+        }
+
         $builder
             ->add('plainPassword', RepeatedType::class, [
                 'mapped' => false,
@@ -39,7 +58,7 @@ class ChangePasswordFormType extends AbstractType
                     'label' => 'Nouveau mot de passe :',
                     'attr' => [
                         'autocomplete' => 'new-password',
-                        'placeholder' => 'mot de passe'                    
+                        'placeholder' => 'nouveau mot de passe'                    
                     ],
                     'constraints' => [
                         new NotBlank([
@@ -57,24 +76,26 @@ class ChangePasswordFormType extends AbstractType
                     'label' => 'Confirmer le mot de passe :',
                     'attr' => [
                         'autocomplete' => 'new-password',
-                        'placeholder' => 'mot de passe'
+                        'placeholder' => 'nouveau mot de passe'
                     ],
                 ],
                 'invalid_message' => 'Les mots de passe ne sont pas identiques !',
-                // Instead of being set onto the object directly,
-                // this is read and encoded in the controller
             ])
         ;
     }
 
     /**
-     * No option needed here
+     * option to define if need to display 'current password' form on not
      *
      * @param OptionsResolver $resolver
      * @return void
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults([
+            'current_password_is_required' => false
+        ]);
+        
+        $resolver->setAllowedTypes('current_password_is_required', 'bool');
     }
 }
