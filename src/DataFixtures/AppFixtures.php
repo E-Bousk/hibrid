@@ -62,7 +62,7 @@ class AppFixtures extends Fixture
 
         $manager->persist($admin);
 
-        for ($u= 0; $u < 5; $u++)
+        for ($u= 0; $u < mt_rand(20, 30); $u++)
         {
             $user= new User;
             $user->setEmail($faker->email())
@@ -76,40 +76,43 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
-        for ($u= 0; $u < 5; $u++)
+        $cities=[];
+        for ($u= 0; $u < mt_rand(15, 25); $u++)
         {
             $city= new City;
             $city->setName($faker->city)
                 ->setPostalCode(mt_rand(10000, 95000));
+            
+            $cities[]= $city;
 
             $manager->persist($city);
         }
 
-        $rentalSpaceType= new RentalSpaceType;
-        $rentalSpaceType->setDesignation("Cahute 2.5m X 5m");
+        $RStype= ["Cahute 2.5m X 5m", "Cahute 5m X 5m", "Worklab"];
+        $rentalSpaceTypes= [];
+        for ($rst=0; $rst<3; $rst++) {
+            $rentalSpaceType= new RentalSpaceType;
+            $rentalSpaceType->setDesignation($RStype[$rst]);
+
+            $rentalSpaceTypes[]= $rentalSpaceType;
+
+            $manager->persist($rentalSpaceType);
+        }
+
         $manager->persist($rentalSpaceType);
 
-        $rentalSpaceType= new rentalSpaceType;
-        $rentalSpaceType->setDesignation("Cahute 5m X 5m");
-        $manager->persist($rentalSpaceType);
-
-        $rentalSpaceType= new rentalSpaceType;
-        $rentalSpaceType->setDesignation("Worklab");
-
-        $manager->persist($rentalSpaceType);
-
-        for ($u= 0; $u < 5; $u++)
+        for ($u= 0; $u < mt_rand(20, 25); $u++)
         {
             $rentalSpace= new RentalSpace;
-            $rentalSpace->setRentalSpaceType($rentalSpaceType)
-                        ->setCity($city)
-                        ->setQuantity(rand(1, 5))
-                        ->setMinimumDurationRule(rand(3, 35))
-                        ->setMaximumDurationRule(rand(70, 140))
-                        ->setDayPrice(rand(150, 350))
-                        ->setWeekPrice(rand(1500, 35000))
-                        ->setWeekendPrice(rand(300, 700))
-                        ->setMonthPrice(rand(5000, 35000));
+            $rentalSpace->setRentalSpaceType($faker->randomElement($rentalSpaceTypes))
+                        ->setCity($faker->randomElement($cities))
+                        ->setQuantity(mt_rand(1, 5))
+                        ->setMinimumDurationRule(mt_rand(3, 35))
+                        ->setMaximumDurationRule(mt_rand(70, 140))
+                        ->setDayPrice(mt_rand(150, 350))
+                        ->setWeekPrice(mt_rand(1500, 35000))
+                        ->setWeekendPrice(mt_rand(300, 700))
+                        ->setMonthPrice(mt_rand(5000, 35000));
 
             $manager->persist($rentalSpace);
         }

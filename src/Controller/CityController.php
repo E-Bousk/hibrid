@@ -38,7 +38,7 @@ class CityController extends AbstractController
      * @param CityRepository $cityRepository
      * @return Response
      */
-    #[Route('/', name: 'city_list', methods: ['GET'])]
+    #[Route('', name: 'city_list', methods: ['GET'])]
     public function list(CityRepository $cityRepository): Response
     {
 

@@ -36,7 +36,7 @@ class RentalSpaceTypeController extends AbstractController
      * @param RentalSpaceTypeRepository $rentalSpaceTypeRepository
      * @return Response
      */
-    #[Route('/', name: 'rental_space_type_list', methods: ['GET'])]
+    #[Route('', name: 'rental_space_type_list', methods: ['GET'])]
     public function list(RentalSpaceTypeRepository $rentalSpaceTypeRepository): Response
     {
 
