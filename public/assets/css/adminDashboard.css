@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css?familly=Poppins:200,300,400,500,600,700,800,900&display=swap");
+
+*{
+    font-family: "Poppins", sans-serif;
+}
+
+/* **************************** */
+/* **       Positioning      ** */
+/* **************************** */
+.dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    padding: 40px 0 ;
+}
+
+/* **************************** */
+/* **     Card managment     ** */
+/* **************************** */
+.dashboard .dashboardCard {
+    position: relative;
+    width: 280px;
+    height: 350px;
+    box-shadow: inset 5px 5px 5px rgba(0,0,0,0.05),
+                inset -5px -5px 5px rgba(255,255,255,0.5),
+                5px 5px 5px rgba(0,0,0,0.05),
+                -5px -5px 5px rgba(255,255,255,0.5);
+    border-radius: 15px;
+    margin :30px;
+}
+
+.dashboard .dashboardCard .dashboardBox {
+    position: absolute;
+    top:20px;
+    right:20px;
+    left:20px;
+    bottom:20px;
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+}
+
+.dashboard .dashboardCard:nth-child(1):hover .dashboardBox {
+    transform: translateY(-50px) ;
+    box-shadow: 0px 1px 40px rgba(0,0,0,0.4);
+    background: linear-gradient(45deg, rgb(109, 248, 81), orange);
+}
+.dashboard .dashboardCard:nth-child(2):hover .dashboardBox {
+    transform: translateY(-50px) ;
+    box-shadow: 0px 1px 40px rgba(0,0,0,0.4);
+    background: linear-gradient(45deg, rgb(81, 120, 248), rgb(174, 0, 255));
+}
+.dashboard .dashboardCard:nth-child(3):hover .dashboardBox {
+    transform: translateY(-50px) ;
+    box-shadow: 0px 1px 40px rgba(0,0,0,0.4);
+    background: linear-gradient(45deg, rgb(248, 106, 81),rgb(81, 195, 248));
+}
+
+.dashboard .dashboardCard .dashboardBox .dashboardContent {
+    padding: 20px;
+    text-align: center;
+}
+
+/* ********************** */
+/* **    Icon part    **  */
+/* ********************** */
+.dashboard .dashboardCard .dashboardBox .dashboardContent h2 {
+    position: absolute;
+    top: 1px;
+    right: 10px;
+    font-size: 7em;
+    color: rgba(0,0,0,0.02);
+    transition: .5s;
+}
+.dashboard .dashboardCard:hover .dashboardBox .dashboardContent h2 {
+    color: rgba(0,0,0,0.1);
+}
+
+/* **************************** */
+/* **       Title part      **  */
+/* **************************** */
+.dashboard .dashboardCard .dashboardBox .dashboardContent h3 {
+    font-size: 1.8em;
+    color: white;
+    z-index: 1;
+}
+.dashboard .dashboardCard:hover .dashboardBox .dashboardContent h3 {
+    color:#000;
+    font-weight: bolder;
+}
+
+/* **************************** */
+/* **    Decription part    **  */
+/* **************************** */
+.dashboard .dashboardCard .dashboardBox .dashboardContent p {
+    font-size: 1em;
+    font-weight: 300;
+    color: white;
+    z-index: 1;
+}
+
+.dashboard .dashboardCard:hover .dashboardBox .dashboardContent p {
+    color:#fff;
+    font-weight: bolder;
+}
+
+/* **************************** */
+/* **      Button part      **  */
+/* **************************** */
+.dashboard .dashboardCard .dashboardBox .dashboardContent a {
+    display: inline-block;
+    padding: 10px 25px;
+    color: white;
+    border-radius: 10px;
+    background-color: rgb(19, 180, 255);
+    margin-top: 15px;
+    text-decoration: none;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.dashboard .dashboardCard:hover .dashboardBox .dashboardContent a {
+    background-color:#ff568f;
+}
+
+/* **************************** */
+/* **     text alignment    **  */
+/* **************************** */
+.dashboardRentalSpace h3 {
+    margin-bottom: 80px;
+}
+
+.dashboardRentalSpaceType h3 {
+    margin-bottom: 43px;
+}
+
+.dashboardTown h3 {
+    margin-bottom: 80px;
+}
+
+.dashboardRentalSpace p {
+    margin-bottom: 30px;
+}
+
+.dashboardRentalSpaceType p {
+    margin-bottom: 4px;
+}
+
+.dashboardTown p {
+    margin-bottom: 30px;
+}

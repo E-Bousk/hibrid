@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Tableau de bord administrateur' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ path('homepage') }}assets/css/adminDashboard.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ path('homepage') }}assets/js/randomBackground.js"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="dashboard">
+        <div class="dashboardCard">
+            <div class="dashboardBox">
+                <div class="dashboardContent dashboardRentalSpace">
+                    <h2><i class="fas fa-clipboard-list"></i></h2>
+                    <h3>Espace locatif</h3>
+                    <p>Gestion des espaces locatifs</p>
+                    <a href="{{ path('rental_space_list') }}">Y accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="dashboardCard">
+            <div class="dashboardBox">
+                <div class="dashboardContent dashboardRentalSpaceType">
+                    <h2><i class="fas fa-cogs"></i></h2>
+                    <h3>Type d'espace locatif</h3>
+                    <p>Gestion des types d'espace locatif</p>
+                    <a href="{{ path('rental_space_type_list') }}">Y accéder</a>
+                </div>
+            </div>
+        </div>
+        <div class="dashboardCard">
+            <div class="dashboardBox">
+                <div class="dashboardContent dashboardTown">
+                    <h2><i class="fas fa-city"></i></h2>
+                    <h3>Ville</h3>
+                    <p>Gestion des villes</p>
+                    <a href="{{ path('city_list') }}">Y accéder</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
