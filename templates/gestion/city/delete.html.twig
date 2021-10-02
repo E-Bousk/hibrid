@@ -19,8 +19,8 @@
 
         <div class="mb-3 card surrounding">
             <div class="card-header surrounding">Vous êtes sur le point d'effacer :</div>
-            <div class="card-body dataCity" data-city="{{ city.name|upper }}" data-city-postal-code="{{ city.postalCode }}">
-                <h3 class="card-title">{{ city.name|upper }}</h3>
+            <div class="card-body dataCity" data-city="{{ city.name | restoreSemicolon}}" data-city-postal-code="{{ city.postalCode }}">
+                <h3 class="card-title">{{ city.name | restoreSemicolon | raw }}</h3>
                 <p class="card-text">Code postal : <b class="h4 text-light">{{ city.postalCode }}</b>
             </div>
         </div>

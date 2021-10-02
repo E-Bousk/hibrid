@@ -19,8 +19,8 @@
 
         <div class="mb-3 card surrounding">
             <div class="card-header surrounding">Vous êtes sur le point d'effacer :</div>
-            <div class="card-body dataRentalSpaceType" data-rental-space-type="{{ rental_space_type.designation|upper }}">
-                <h3 class="card-title">{{ rental_space_type.designation|upper }}</h3>
+            <div class="card-body dataRentalSpaceType" data-rental-space-type="{{ rental_space_type.designation | restoreSemicolon }}">
+                <h3 class="card-title">{{ rental_space_type.designation | restoreSemicolon | raw }}</h3>
             </div>
         </div>
 

@@ -14,7 +14,7 @@
 {% block body %}
 <div class="row">
     <div class="col-md-6 mx-auto">
-        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary dataRentalSpace" data-rental-space="{{ rental_space.rentalSpaceType|upper }}" data-rental-space-city="{{ rental_space.city|upper }}" data-rental-space-quantity="{{ rental_space.quantity }}">Modifier un espace locatif</h1>
+        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary dataRentalSpace" data-rental-space="{{ rental_space.rentalSpaceType | restoreSemicolon }}" data-rental-space-city="{{ rental_space.city | restoreSemicolon }}" data-rental-space-quantity="{{ rental_space.quantity }}">Modifier un espace locatif</h1>
 
         {{ include('gestion/_shared/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 

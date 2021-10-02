@@ -15,10 +15,10 @@
                 {{ form_start(accountForm, {'attr': {'novalidate': 'novalidate'}}) }}
                 <div class="row">
                     <div class="col-md-6">
-                        {{ form_row(accountForm.firstName) }}
+                        {{ form_row(accountForm.firstName, {'value': firstName}) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_row(accountForm.lastName) }}
+                        {{ form_row(accountForm.lastName, {'value': lastName }) }}
                     </div>
                 </div>
                 <div class="row">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    {{ form_row(accountForm.address) }}
+                    {{ form_row(accountForm.address, {'value': address }) }}
                     {{ form_row(accountForm.email) }}
                 </div>
             </div>

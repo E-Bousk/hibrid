@@ -37,8 +37,8 @@
             <tbody>
             {% for rental_space in rental_spaces %}
                 <tr>
-                    <td>{{ rental_space.rentalSpaceType }}</td>
-                    <td>{{ rental_space.city.name }}</td>
+                    <td>{{ rental_space.rentalSpaceType | restoreSemicolon | raw  }}</td>
+                    <td>{{ rental_space.city.name | restoreSemicolon | raw  }}</td>
                     <td>{{ rental_space.city.postalCode }}</td>
                     <td>{{ rental_space.quantity }}</td>
                     <td>{{ rental_space.minimumDurationRule }}&nbsp;heures</td>

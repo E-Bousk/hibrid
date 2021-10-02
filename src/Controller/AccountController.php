@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\UserFormType;
 use App\Form\ChangePasswordFormType;
+use App\Security\PreventSqlInjection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,17 +40,16 @@ class AccountController extends AbstractController
     }
 
     /**
-     * 
      * Edit profile page
-     * 
+     *
+     * @param PreventSqlInjection $preventSqlInjection
      * @param EntityManagerInterface $em
      * @param Request $request
      * @return Response
-     * 
      */
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[Route('/edit', name: 'app_account_edit', methods: ['GET', 'PATCH'])]
-    public function editPassword(EntityManagerInterface $em, Request $request): Response
+    public function edit(PreventSqlInjection $preventSqlInjection, EntityManagerInterface $em, Request $request): Response
     {
         $user= $this->getUser();
 
@@ -60,13 +60,36 @@ class AccountController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
+            /** *************************************
+             ** MALICIOUS SQL INJECTION PREVENTION **
+             ************************************* */
+            // Get data to replace potential malicious code
+            $data= $form->getData();
+
+            // Get, check and set string with the method 'replaceInData'
+            $firstName= $data->getFirstName();
+            $firstNameSafe= $preventSqlInjection->replaceInData($firstName);
+            $user->setFirstName($firstNameSafe);
+
+            $lastName= $data->getlastName();
+            $lastNameSafe= $preventSqlInjection->replaceInData($lastName);
+            $user->setLastName($lastNameSafe);
+
+            $address= $data->getAddress();
+            $addressSafe= $preventSqlInjection->replaceInData($address);
+            $user->setAddress($addressSafe);
+
            $em->flush();
            $this->addFlash('success', 'Profil modifié avec succès !');
 
            return $this->redirectToRoute('app_account');
         }
+
         return $this->render('account/edit.html.twig', [
-            'accountForm' => $form->createView()
+            'accountForm' => $form->createView(),
+            'firstName' => $preventSqlInjection->restoreData($user->getfirstname()),
+            'lastName' => $preventSqlInjection->restoreData($user->getLastname()),
+            'address' => $preventSqlInjection->restoreData($user->getAddress()),
         ]);
     }
 
@@ -95,12 +118,12 @@ class AccountController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
-            dump($user);
-            dump($form->get('plainPassword')->getData());
+            // dump($user);
+            // dump($form->get('plainPassword')->getData());
             $user->setPassword(
                 $passwordHasher->hashPassword($user, $form->get('plainPassword')->getData())
             );
-            dd($user->getPassword());
+            // dd($user->getPassword());
             
             $em->flush();
             $this->addFlash('success', 'Mot de passe modifié avec succès !');

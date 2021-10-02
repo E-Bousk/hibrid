@@ -14,7 +14,7 @@
 {% block body %}
 <div class="row">
     <div class="col-md-6 mx-auto">
-        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary dataCity" data-city="{{ city.name|upper }}" data-city-postal-code="{{ city.postalCode }}">Modifier une ville</h1>
+        <h1 class="my-5 py-1 h4 text-center card text-white bg-primary dataCity" data-city="{{ city.name | restoreSemicolon }}" data-city-postal-code="{{ city.postalCode }}">Modifier une ville</h1>
 
         {{ include('gestion/_shared/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 

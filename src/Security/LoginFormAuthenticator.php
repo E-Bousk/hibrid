@@ -3,10 +3,10 @@
 namespace App\Security;
 
 use App\Entity\User;
+use App\Security\PreventSqlInjection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 /**
  * Class LoginFormAuthenticator | file LoginFormAuthenticator.php
@@ -43,6 +42,7 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
     protected $flashBag;
     protected $entityManager;
     protected $urlGenerator;
+    protected $preventSqlInjection;
 
     /**
      * Set $encoder will be use on 'checkCredentials' method to hash and verify wordpass
@@ -54,12 +54,14 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
                                 UserPasswordHasherInterface $encoder, 
                                 UrlGeneratorInterface $urlGenerator,
                                 FlashBagInterface $flashBag,
-                                EntityManagerInterface $entityManager)
+                                EntityManagerInterface $entityManager,
+                                PreventSqlInjection $preventSqlInjection)
     {
        $this->encoder= $encoder;
        $this->flashBag= $flashBag;
        $this->entityManager= $entityManager;
        $this->urlGenerator= $urlGenerator;
+       $this->preventSqlInjection= $preventSqlInjection;
     }
     
     /**
@@ -68,7 +70,7 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
     public function supports(Request $request)
     {
         /* check if the route is 'security_login' with POST method */
-        return $request->attributes->get('_route') === 'security_login' 
+        return $request->attributes->get('_route') === self::LOGIN_ROUTE
             && $request->isMethod('POST');
         /* go to next method if return = true */
     }
@@ -132,13 +134,14 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
     {
         $user= $this->entityManager->getRepository(User::class)->findOneBy(['email' => $token->getUser()->getUserIdentifier()]);
 
-        $this->flashBag->add('success', 'Bienvenue ' . $user->getFullName() . ' !');
+        /* replace escaped string if any with 'restorData' */
+        $this->flashBag->add('success', sprintf('Bienvenue %s !', $this->preventSqlInjection->restoreData($user->getFullName())));
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
 
-        /* on success, if 'ROLE' = 'ADMIN', redirect to admin dashboard */
+        /* if 'ROLE' = 'ADMIN', redirect to admin dashboard */
         if (in_array("ROLE_ADMIN", $user->getRoles())) {
             return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
         }

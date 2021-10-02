@@ -28,7 +28,7 @@
             <tbody>
             {% for rental_space_type in rental_space_types %}
                 <tr>
-                    <td>{{ rental_space_type.designation }}</td>
+                    <td>{{ rental_space_type.designation | restoreSemicolon | raw  }}</td>
                     <td>
                         <a href="{{ path('rental_space_type_edit', {'id': rental_space_type.id}) }}"><i class="far fa-2x fa-edit"></i></a>
                         <a href="{{ path('rental_space_type_delete', {'id': rental_space_type.id}) }}"><i class="far fa-2x fa-trash-alt"></i></a>
