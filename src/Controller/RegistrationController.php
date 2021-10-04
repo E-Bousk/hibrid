@@ -32,12 +32,12 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 class RegistrationController extends AbstractController
 {
     private $emailVerifier;
-    private $SqlInjection;
+    private $PreventSqlInjection;
 
-    public function __construct(EmailVerifier $emailVerifier, PreventSqlInjection $SqlInjection)
+    public function __construct(EmailVerifier $emailVerifier, PreventSqlInjection $PreventSqlInjection)
     {
         $this->emailVerifier = $emailVerifier;
-        $this->SqlInjection= $SqlInjection;
+        $this->PreventSqlInjection= $PreventSqlInjection;
     }
 
     /**
@@ -82,21 +82,10 @@ class RegistrationController extends AbstractController
             /** *************************************
              ** MALICIOUS SQL INJECTION PREVENTION **
              ************************************* */
-            // Get data to replace potential malicious code
-            $data= $form->getData();
-
             // Get, check and set string with the method 'replaceInData'
-            $firstName= $data->getFirstName();
-            $firstNameSafe= $this->SqlInjection->replaceInData($firstName);
-            $user->setFirstName($firstNameSafe);
-
-            $lastName= $data->getlastName();
-            $lastNameSafe= $this->SqlInjection->replaceInData($lastName);
-            $user->setLastName($lastNameSafe);
-
-            $address= $data->getAddress();
-            $addressSafe= $this->SqlInjection->replaceInData($address);
-            $user->setAddress($addressSafe);
+            $user->setFirstName($this->PreventSqlInjection->replaceInData($form->getData()->getFirstName()));
+            $user->setLastName($this->PreventSqlInjection->replaceInData($form->getData()->getlastName()));
+            $user->setAddress($this->PreventSqlInjection->replaceInData($form->getData()->getAddress()));
             
             // dd($user);
 

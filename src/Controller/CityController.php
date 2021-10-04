@@ -28,6 +28,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/admin/gestion/villes')]
 class CityController extends AbstractController
 {
+    private $preventSqlInjection;
+
+    public function __construct(PreventSqlInjection $preventSqlInjection)
+    {
+        $this->preventSqlInjection= $preventSqlInjection;
+    }
 
     /**
      * City management page
@@ -60,7 +66,7 @@ class CityController extends AbstractController
      * @return Response
      */
     #[Route('/ajouter', name: 'city_add', methods: ['GET', 'POST'])]
-    public function add(Request $request, PreventSqlInjection $preventSqlInjection, ValidatorInterface $validator, SessionInterface $session): Response
+    public function add(Request $request, ValidatorInterface $validator, SessionInterface $session): Response
     {
         $city = new City();
         $form = $this->createForm(CityFormType::class, $city);
@@ -76,8 +82,7 @@ class CityController extends AbstractController
          ** MALICIOUS SQL INJECTION PREVENTION **
          ************************************* */
         // Replace potential malicious code in NAME
-        $nameSafe= $preventSqlInjection->replaceInData($city->getName());
-        $city->setName($nameSafe);
+        $city->setName($this->preventSqlInjection->replaceInData($city->getName()));
         
         // If parameters of request are not empty (filled and submitted form)
         if ($request->request->get('city_form')) {
@@ -140,10 +145,23 @@ class CityController extends AbstractController
     #[Route('/{id}/editer', name: 'city_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, City $city): Response
     {
+        // to get restored string on the edit form
+        $city->setName($this->preventSqlInjection->restoreData($city->getName()));
         $form = $this->createForm(CityFormType::class, $city);
+        // to get correct dispaly on the delete confirmation modal window
+        $city->setName($this->preventSqlInjection->replaceInData($city->getName()));
+
         $form->handleRequest($request);
 
+        // dd($city);
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** *************************************
+             ** MALICIOUS SQL INJECTION PREVENTION **
+             ************************************* */
+            $city->setName($this->preventSqlInjection->replaceInData($city->getName()));
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('city_list');
@@ -157,6 +175,7 @@ class CityController extends AbstractController
 
     /**
      * City management page
+     * 
      * Deleting an existing city in the database
      * Verifying CSRF token before deleting
      * Return a page with a modal confirmation

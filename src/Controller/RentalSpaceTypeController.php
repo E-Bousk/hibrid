@@ -27,6 +27,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/admin/gestion/types')]
 class RentalSpaceTypeController extends AbstractController
 {
+
+    private $preventSqlInjection;
+
+    public function __construct(PreventSqlInjection $preventSqlInjection)
+    {
+        $this->preventSqlInjection= $preventSqlInjection;
+    }
+
     /**
      * Rental space management page
      * 
@@ -58,7 +66,7 @@ class RentalSpaceTypeController extends AbstractController
      * @return Response
      */
     #[Route('/ajouter', name: 'rental_space_type_add', methods: ['GET', 'POST'])]
-    public function add(Request $request, PreventSqlInjection $preventSqlInjection, ValidatorInterface $validator, SessionInterface $session): Response
+    public function add(Request $request, ValidatorInterface $validator, SessionInterface $session): Response
     {
         $rentalSpaceType = new RentalSpaceType();
         $form = $this->createForm(RentalSpaceTypeFormType::class, $rentalSpaceType);
@@ -73,21 +81,17 @@ class RentalSpaceTypeController extends AbstractController
          ** MALICIOUS SQL INJECTION PREVENTION **
         ************************************* */
         // Replace potential malicious code in TYPE
-        $designationSafe= $preventSqlInjection->replaceInData($rentalSpaceType->getDesignation());
-        $rentalSpaceType->setDesignation($designationSafe);
+        $rentalSpaceType->setDesignation($this->preventSqlInjection->replaceInData($rentalSpaceType->getDesignation()));
 
         // If parameters of request are not empty (filled and submitted form)
         if ($request->request->get('rental_space_type_form')) {
             
-            // dd($request->request->get('rental_space_type_form'));
-
             // get the CSRF token generated on the modal
             $submittedToken = $request->request->get('rental_space_type_form')['_token'];
 
             // Create a RENTAL SPACE TYPE from RENTAL SPACE TYPE add page
             if ($form->isSubmitted() && $form->isValid()) {
 
-                // dd("1 - Ajout depuis type d'espace locatif");
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($rentalSpaceType);
                 $entityManager->flush();
@@ -99,14 +103,13 @@ class RentalSpaceTypeController extends AbstractController
             if ($form->isSubmitted() && $this->isCsrfTokenValid('rental_space_type_form__token', $submittedToken)) {
 
                 if ($rentalSpaceTypeValidation->count() === 0) {
-                    // dd("2 - Ajout depuis l'espace locatif");
+
                     $entityManager = $this->getDoctrine()->getManager();
                     $entityManager->persist($rentalSpaceType);
                     $entityManager->flush();
 
                     $session->remove('addedType');
                     $session->set('addedType', $rentalSpaceType->getId());
-                    // dd($session->get('addedType'));
 
                     $this->addFlash("add_success", sprintf("Le type d'espace locatif '%s' à bien été ajouté", $rentalSpaceType));
                     return $this->redirectToRoute('rental_space_add');
@@ -136,10 +139,21 @@ class RentalSpaceTypeController extends AbstractController
     #[Route('/{id}/editer', name: 'rental_space_type_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, RentalSpaceType $rentalSpaceType): Response
     {
+        // to get restored string on the edit form
+        $rentalSpaceType->setDesignation($this->preventSqlInjection->restoreData($rentalSpaceType->getDesignation()));
         $form = $this->createForm(RentalSpaceTypeFormType::class, $rentalSpaceType);
+        // to get correct dispaly on the delete confirmation modal window
+        $rentalSpaceType->setDesignation($this->preventSqlInjection->replaceInData($rentalSpaceType->getDesignation()));
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** *************************************
+             ** MALICIOUS SQL INJECTION PREVENTION **
+             ************************************* */
+            $rentalSpaceType->setDesignation($this->preventSqlInjection->replaceInData($rentalSpaceType->getDesignation()));
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('rental_space_type_list');

@@ -27,6 +27,9 @@
 			</ul> {# end of 'navbar-nav' #}
 			<ul class="navbar-nav">
                 {% if app.user %}
+                    {% if is_granted('ROLE_ADMIN') %}
+						<li class="nav-item"><a href="{{ path("admin_dashboard") }}" class="my-1 btn btn-success">Gestion</a></li>
+					{% endif %}
                 	<li class="nav-item"><a href="{{ path('app_account') }}" class="my-1 btn btn-primary border border-light">Profil</a></li>
                     <li class="nav-item"><a href="{{ path("security_logout") }}" class="my-1 btn btn-danger">Se&nbsp;déconnecter</a></li>
 			    {% else %}

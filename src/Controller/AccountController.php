@@ -63,21 +63,10 @@ class AccountController extends AbstractController
             /** *************************************
              ** MALICIOUS SQL INJECTION PREVENTION **
              ************************************* */
-            // Get data to replace potential malicious code
-            $data= $form->getData();
-
             // Get, check and set string with the method 'replaceInData'
-            $firstName= $data->getFirstName();
-            $firstNameSafe= $preventSqlInjection->replaceInData($firstName);
-            $user->setFirstName($firstNameSafe);
-
-            $lastName= $data->getlastName();
-            $lastNameSafe= $preventSqlInjection->replaceInData($lastName);
-            $user->setLastName($lastNameSafe);
-
-            $address= $data->getAddress();
-            $addressSafe= $preventSqlInjection->replaceInData($address);
-            $user->setAddress($addressSafe);
+            $user->setFirstName($preventSqlInjection->replaceInData($form->getData()->getFirstName()));
+            $user->setLastName($preventSqlInjection->replaceInData($form->getData()->getlastName()));
+            $user->setAddress($preventSqlInjection->replaceInData($form->getData()->getAddress()));
 
            $em->flush();
            $this->addFlash('success', 'Profil modifié avec succès !');
