@@ -3,9 +3,8 @@
 namespace App\Tests\Entity;
 
 use App\Entity\User;
+use App\Tests\TestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Class UserEntityTest | file UserEntityTest.php
@@ -19,117 +18,98 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class UserEntityTest extends KernelTestCase
 {
-    private const VALID_VALUE_FIRST_NAME=  'Prénom';
-    private const VALID_VALUE_LAST_NAME=  'Nom';
-    private const NOT_BLANK_CONSTRAINT_MESSAGE_FIRSTNAME= 'Veuillez saisir un prénom';
-    private const NOT_BLANK_CONSTRAINT_MESSAGE_LASTNAME= 'Veuillez saisir un nom';
-
-    private const NOT_BLANK_CONSTRAINT_MESSAGE_EMAIL= 'Veuillez saisir une adresse email';
-    private const VALID_VALUE_EMAIL=  'toto@gmail.com';
+    use TestTrait;
     
+    private const VALID_VALUE_FIRST_NAME=  'PrénomTEST';
+    private const VALID_VALUE_LAST_NAME=  'NomTEST';
+    private const VALID_VALUE_EMAIL=  'test@test.com';
 
-    private ValidatorInterface $validator;
-
+    private const NOT_BLANK_CONSTRAINT_MESSAGE= 'Veuillez saisir ';
+    
     /**
-     * Get CONSTRAINT VALIDATOR 
+     * Create a new (valid) USER to use it on tests
      *
-     * @return void
+     * @return User
      */
-    protected function setUp(): void
+    public function getUser(): User
     {
-        $kernel= self::bootKernel();
-
-        $this->validator= $kernel->getContainer()->get('validator');
+        return (new User())
+                        ->setFirstName(self::VALID_VALUE_FIRST_NAME)
+                        ->setLastName(self::VALID_VALUE_LAST_NAME)
+                        ->setEmail(self::VALID_VALUE_EMAIL);
     }
-
+    
     /**
      * Set up Test on USER entity
-     * test = valid firstName, valid lastName and valid email
+     * TEST = valid firstName, valid lastName and valid email
      *
      * @return void
      */
     public function testUserEntityIsValid(): void
     {
-        $user= new User;
-
-        $user->setFirstName(self::VALID_VALUE_FIRST_NAME)
-            ->setLastName(self::VALID_VALUE_LAST_NAME)
-            ->setEmail(self::VALID_VALUE_EMAIL);
-
-        $this->getValidationErrors($user, 0);
+        $this->getValidationErrors($this->getUser(), 0);
     }
 
     /**
      * Set up Test on USER entity
-     * test = missing email
+     * TEST = missing email
      * 
      * @return void
      */
-    public function testUserEntityIsInvalidDueToMissingEmail(): void
+    public function testUserEntityIsNotValidDueToMissingEmail(): void
     {
-        $user= new User;
-
-        $user->setFirstName(self::VALID_VALUE_FIRST_NAME)
-            ->setLastName(self::VALID_VALUE_LAST_NAME);
-
-        $errors=$this->getValidationErrors($user, 1);
-
-        $this->assertEquals(self::NOT_BLANK_CONSTRAINT_MESSAGE_EMAIL, $errors[0]->getMessage());
+        $errors=$this->getValidationErrors($this->getUser()->setEmail(''), 1);
+        $this->assertEquals(self::NOT_BLANK_CONSTRAINT_MESSAGE . 'une adresse email', $errors[0]->getMessage());
     }
+
     /**
      * Set up Test on USER entity
-     * test = missing email
+     * test = missing first name
      * 
      * @return void
      */
-    public function testUserEntityIsInvalidDueToMissingFirstName(): void
+    public function testUserEntityIsNotValidDueToMissingFirstName(): void
     {
-        $user= new User;
-
-        $user->setFirstName(self::VALID_VALUE_FIRST_NAME)
-            ->setEmail(self::VALID_VALUE_EMAIL);
-
-        $errors=$this->getValidationErrors($user, 1);
-
-        $this->assertEquals(self::NOT_BLANK_CONSTRAINT_MESSAGE_LASTNAME, $errors[0]->getMessage());
+        $errors=$this->getValidationErrors($this->getUser()->setFirstName(''), 1);
+        $this->assertEquals(self::NOT_BLANK_CONSTRAINT_MESSAGE . 'un prénom', $errors[0]->getMessage());
     }
+
     /**
      * Set up Test on USER entity
-     * test = missing email
+     * TEST = missing last name
      * 
      * @return void
      */
-    public function testUserEntityIsInvalidDueToMissingLastName(): void
+    public function testUserEntityIsNotValidDueToMissingLastName(): void
     {
-        $user= new User;
-
-        $user->setLastName(self::VALID_VALUE_LAST_NAME)
-            ->setEmail(self::VALID_VALUE_EMAIL);
-
-        $errors=$this->getValidationErrors($user, 1);
-
-        $this->assertEquals(self::NOT_BLANK_CONSTRAINT_MESSAGE_FIRSTNAME, $errors[0]->getMessage());
+        $errors=$this->getValidationErrors($this->getUser()->setLastName(''), 1);
+        $this->assertEquals(self::NOT_BLANK_CONSTRAINT_MESSAGE . 'un nom', $errors[0]->getMessage());
     }
-
-
-
-
 
     /**
-     * Launch (use) phpunit to test USER entity
-     *
-     * @param User $user
-     * @param integer $nbrExpectedErrors
-     * @return ConstraintViolationList $errors
+     * Set up Test on USER entity
+     * TEST = invalid data on first name, on last name and on email
+     * 
+     * @dataProvider provideInvalidData
+     * 
+     * @return void
      */
-    private function getValidationErrors(User $user, int $nbrExpectedErrors): ConstraintViolationList
+    public function testUserEntityIsNotValidDueToInvalidData(string|int $invalidData): void
     {
-        $errors= $this->validator->validate($user);
-
-        $this->assertCount($nbrExpectedErrors, $errors);
-
-        return $errors;
+        $this->getValidationErrors($this->getUser()->setFirstName($invalidData), 1);
+        $this->getValidationErrors($this->getUser()->setLastName($invalidData), 1);
+        $this->getValidationErrors($this->getUser()->setEmail($invalidData), 1);
     }
 
+    // /**
+    //  * Set up Test on USER entity
+    //  * TEST = email cannot be duplicated
+    //  * 
+    //  * @return void
+    //  */
+    // public function testUserEntityIsNotValidDueToDuplicatedEmail(): void
+    // {
+    //     $this->getValidationErrors($this->getUser()->setEmail('duplicated@email.com'), 1);
+    // }
 
 }
