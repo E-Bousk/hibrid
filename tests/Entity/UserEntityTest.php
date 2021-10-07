@@ -3,7 +3,7 @@
 namespace App\Tests\Entity;
 
 use App\Entity\User;
-use App\Tests\TestTrait;
+use App\Tests\_shared\TestEntityTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class UserEntityTest extends KernelTestCase
 {
-    use TestTrait;
+    use TestEntityTrait;
     
     private const VALID_VALUE_FIRST_NAME=  'PrénomTEST';
     private const VALID_VALUE_LAST_NAME=  'NomTEST';

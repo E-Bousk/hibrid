@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\_shared;
 
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 /**
- * trait TestTrait | file TestTrait.php
+ * trait TestEntityTrait | file TestEntityTrait.php
  *
  * In this trait, we have method for :
  *
@@ -17,8 +17,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * 
  * Provide invalid data to use on tests
  * 
+ * ⚠ The class must extends KernelTestCase ⚠
+ * 
  */
-trait TestTrait
+trait TestEntityTrait
 {
     /**
      * Access CONSTRAINT VALIDATOR and use it on USER entity
@@ -55,14 +57,14 @@ trait TestTrait
     public function provideInvalidData(): array
     {
         return [
-            ['abc123'], // Letters and numbers
-            [123], // only (3) numbers or invalid postal code
-            [123456], // only (6) numbers or invalid postal code
-            [';'], // not allowed caracter
-            ['<script>'], // not allowed caracter
-            ['"'], // not allowed caracter
-            ['invalidEmail_AT_test'], //  not allowed caracter or invalid email
-            ['invalidEmail@test'], //  not allowed caracter or invalid email
+            '`123`' => [123], // only (3) numbers or invalid postal code
+            '`123456`' => [123456], // only (6) numbers or invalid postal code
+            '`abc123`' => ['abc123'], // Letters AND numbers
+            '`<script>`' => ['<script>'], // not allowed character
+            '`;`' => [';'], // not allowed character
+            '`"`' => ['"'], // not allowed character
+            '`invalidEmail_AT_test`' => ['invalidEmail_AT_test'], //  not allowed character or invalid email
+            '`invalidEmail@test`' => ['invalidEmail@test'], //  not allowed character or invalid email
         ];
     }
 }
