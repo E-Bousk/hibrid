@@ -22,7 +22,7 @@ class UserEntityTest extends KernelTestCase
     
     private const VALID_VALUE_FIRST_NAME=  'PrénomTEST';
     private const VALID_VALUE_LAST_NAME=  'NomTEST';
-    private const VALID_VALUE_EMAIL=  'test@test.com';
+    private const VALID_VALUE_EMAIL=  'test@user.com';
 
     private const NOT_BLANK_CONSTRAINT_MESSAGE= 'Veuillez saisir ';
     
@@ -40,7 +40,7 @@ class UserEntityTest extends KernelTestCase
     }
     
     /**
-     * Set up Test on USER entity
+     * Test constraints on USER entity
      * TEST = valid firstName, valid lastName and valid email
      *
      * @return void
@@ -51,7 +51,7 @@ class UserEntityTest extends KernelTestCase
     }
 
     /**
-     * Set up Test on USER entity
+     * Test constraints on USER entity
      * TEST = missing email
      * 
      * @return void
@@ -63,7 +63,7 @@ class UserEntityTest extends KernelTestCase
     }
 
     /**
-     * Set up Test on USER entity
+     * Test constraints on USER entity
      * test = missing first name
      * 
      * @return void
@@ -75,7 +75,7 @@ class UserEntityTest extends KernelTestCase
     }
 
     /**
-     * Set up Test on USER entity
+     * Test constraints on USER entity
      * TEST = missing last name
      * 
      * @return void
@@ -87,7 +87,7 @@ class UserEntityTest extends KernelTestCase
     }
 
     /**
-     * Set up Test on USER entity
+     * Test constraints on USER entity
      * TEST = invalid data on first name, on last name and on email
      * 
      * @dataProvider provideInvalidData
@@ -101,15 +101,22 @@ class UserEntityTest extends KernelTestCase
         $this->getValidationErrors($this->getUser()->setEmail($invalidData), 1);
     }
 
-    // /**
-    //  * Set up Test on USER entity
-    //  * TEST = email cannot be duplicated
-    //  * 
-    //  * @return void
-    //  */
-    // public function testUserEntityIsNotValidDueToDuplicatedEmail(): void
-    // {
-    //     $this->getValidationErrors($this->getUser()->setEmail('duplicated@email.com'), 1);
-    // }
-
+    /**
+     * Set up Test on USER entity
+     * TEST = email cannot be duplicated
+     * 
+     * @return void
+     */
+    public function testUserEntityIsNotValidDueToDuplicatedEmail(): void
+    {
+        // Insert into database an user with email = 'duplicated@email.com'
+        $em= self::bootkernel()->getContainer()->get('doctrine')->getManager();
+        $em->getConnection()->executeQuery("INSERT INTO user (email, first_name, last_name, password, roles, is_verified) value ('duplicated@email.com', 'testFirstName', 'testLastName', 'testPassword', '[\"toto\"]', 0)");
+        
+        $this->getValidationErrors($this->getUser()->setEmail('duplicated@email.com'), 1);
+        
+        // Delete this user
+        $em->getConnection()->executeQuery("DELETE FROM user WHERE email = 'duplicated@email.com'");
+        $em->getConnection()->close();
+    }
 }

@@ -51,7 +51,7 @@ class ResetPasswordController extends AbstractController
      * @param MailerInterface $mailer
      * @return Response
      */
-    #[Route('', name: 'app_forgot_password_request')]
+    #[Route('', name: 'app_forgot_password_request', defaults:['_public_access' => true])]
     public function request(Request $request, MailerInterface $mailer): Response
     {   
         // don't show this page if user is already connected

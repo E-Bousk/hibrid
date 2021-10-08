@@ -52,19 +52,17 @@ trait TestEntityTrait
     /**
      * Provide invalid data to use on tests
      *
-     * @return array
+     * @return void
      */
-    public function provideInvalidData(): array
+    public function provideInvalidData()
     {
-        return [
-            '`123`' => [123], // only (3) numbers or invalid postal code
-            '`123456`' => [123456], // only (6) numbers or invalid postal code
-            '`abc123`' => ['abc123'], // Letters AND numbers
-            '`<script>`' => ['<script>'], // not allowed character
-            '`;`' => [';'], // not allowed character
-            '`"`' => ['"'], // not allowed character
-            '`invalidEmail_AT_test`' => ['invalidEmail_AT_test'], //  not allowed character or invalid email
-            '`invalidEmail@test`' => ['invalidEmail@test'], //  not allowed character or invalid email
-        ];
+        yield '`123`' => [123]; // only (3) numbers or invalid postal code
+        yield '`123456`' => [123456]; // only (6) numbers or invalid postal code
+        yield '`abc123`' => ['abc123']; // Letters AND numbers
+        yield '`<script>`' => ['<script>']; // not allowed character
+        yield '`;`' => [';']; // not allowed character
+        yield '`"`' => ['"']; // not allowed character
+        yield '`invalidEmail_AT_test`' => ['invalidEmail_AT_test']; //  not allowed character or invalid email
+        yield '`invalidEmail@test`' => ['invalidEmail@test']; //  not allowed character or invalid email
     }
 }

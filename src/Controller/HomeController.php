@@ -23,7 +23,7 @@ class HomeController extends AbstractController
      * 
      * @return Response
      */
-    #[Route('/', name: 'homepage')]
+    #[Route('/', name: 'homepage', defaults:['_public_access' => true])]
     public function index(): Response
     {
         return $this->render('home/home.html.twig');

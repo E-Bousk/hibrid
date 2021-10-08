@@ -27,7 +27,7 @@ class SecurityController extends AbstractController
      * @param AuthenticationUtils $utils
      * @return Response
      */
-    #[Route('/login', name: 'security_login')]
+    #[Route('/login', name: 'security_login', defaults:['_public_access' => true])]
     public function login(AuthenticationUtils $utils): Response
     {
         $userLoggin = $this->getUser();

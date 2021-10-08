@@ -35,7 +35,7 @@ class RentalSpaceTypeEntityTest extends KernelTestCase
     }
     
     /**
-     * Set up Test on RENTAL SPACE TYPE entity
+     * Test constraints on RENTAL SPACE TYPE entity
      * TEST = valid designation
      *
      * @return void
@@ -46,7 +46,7 @@ class RentalSpaceTypeEntityTest extends KernelTestCase
     }
 
     /**
-     * Set up Test on RENTAL SPACE TYPE entity
+     * Test constraints on RENTAL SPACE TYPE entity
      * test = missing designation
      * 
      * @return void
@@ -58,7 +58,7 @@ class RentalSpaceTypeEntityTest extends KernelTestCase
     }
 
     /**
-     * Set up Test on RENTAL SPACE TYPE entity
+     * Test constraints on RENTAL SPACE TYPE entity
      * TEST = invalid data on designation
      * 
      * @dataProvider provideSpecificInvalidData
@@ -73,16 +73,14 @@ class RentalSpaceTypeEntityTest extends KernelTestCase
     /**
      * Provide invalid data to use on THIS tests
      *
-     * @return array
+     * @return void
      */
-    public function provideSpecificInvalidData(): array
+    public function provideSpecificInvalidData()
     {
-        return [
-            '`1`' => [1], // less than 3 characters
-            '`a`' => ['ab'], // less than 3 characters
-            '`test;`' => ['test;'], // not allowed character
-            '`"test"`' => ['"test"'], // not allowed character
-            '`<test>`' => ['<test>'], // not allowed character
-        ];
+        yield '`1`' => [1]; // less than 3 characters
+        yield '`a`' => ['ab']; // less than 3 characters
+        yield '`test;`' => ['test;']; // not allowed character
+        yield '`"test"`' => ['"test"']; // not allowed character
+        yield '`<test>`' => ['<test>']; // not allowed character
     }
 }

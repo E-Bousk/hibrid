@@ -18,12 +18,11 @@
         <p class="px-2 py-2 text-center rounded surrounding">Veuillez indiquer votre adresse email afin de recevoir un lien
         pour réinitialiser votre mot de passe</p>
 
-        <div class="px-2 pb-3 rounded surrounding">
-
-            {{ form_start(requestForm, {'attr': {'novalidate': 'novalidate'}}) }}
-            {{ form_row(requestForm.email) }}
-        </div>
-        <button class="mt-3 btn btn-primary w-100" type="submit">Recevoir un email de réinitialisation</button>
+        {{ form_start(requestForm, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="px-2 pb-3 rounded surrounding">
+                {{ form_row(requestForm.email) }}
+            </div>
+            <button class="mt-3 btn btn-primary w-100" type="submit">Recevoir un email de réinitialisation</button>
         {{ form_end(requestForm) }}
     </div>
 </div>

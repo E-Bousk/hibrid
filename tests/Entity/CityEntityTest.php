@@ -39,7 +39,7 @@ class CityEntityTest extends KernelTestCase
     }
     
     /**
-     * Set up Test on CITY entity
+     * Test constraints on CITY entity
      * TEST = valid name and valid postal code
      *
      * @return void
@@ -50,7 +50,7 @@ class CityEntityTest extends KernelTestCase
     }
 
     /**
-     * Set up Test on CITY entity
+     * Test constraints on CITY entity
      * test = missing name
      * 
      * @return void
@@ -62,7 +62,7 @@ class CityEntityTest extends KernelTestCase
     }
 
     /**
-     * Set up Test on CITY entity
+     * Test constraints on CITY entity
      * TEST = missing postal code
      * 
      * @return void
@@ -77,7 +77,7 @@ class CityEntityTest extends KernelTestCase
     }
 
     /**
-     * Set up Test on CITY entity
+     * Test constraints on CITY entity
      * TEST = invalid data on name and on postal code
      * 
      * @dataProvider provideInvalidData
@@ -101,16 +101,4 @@ class CityEntityTest extends KernelTestCase
                 break;
         }
     }
-
-    // /**
-    //  * Set up Test on CITY entity
-    //  * TEST = email cannot be duplicated
-    //  * 
-    //  * @return void
-    //  */
-    // public function testCityEntityIsNotValidDueToDuplicatedEmail(): void
-    // {
-    //     $this->getValidationErrors($this->getCity()->setEmail('duplicated@email.com'), 1);
-    // }
-
 }
