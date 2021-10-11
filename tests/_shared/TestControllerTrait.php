@@ -43,12 +43,13 @@ trait TestControllerTrait
     }
 
     /**
-     * Truncate the table before each test
+     * Delete user's data on the datatable before each test
      *
      * @param string $table
+     * @param string $firstName
      * @return void
      */
-    private function deleteDataOnTableBeforeTest(string $table, $firstName): void
+    private function deleteDataOnTableBeforeTest(string $table, string $firstName): void
     {
         $kernel= self::bootKernel();
 

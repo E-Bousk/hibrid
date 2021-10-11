@@ -12,10 +12,10 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  *
  * In this class, we have methods for :
  *
- * Getting Symfony constraints validator
+ * Create a valid CITY
  * Testing constraints on CITY entity with valid data
  * Testing constraints on CITY entity with missing data
- * 
+ * Testing constraints on CITY entity with invalid data
  */
 class CityEntityTest extends KernelTestCase
 {

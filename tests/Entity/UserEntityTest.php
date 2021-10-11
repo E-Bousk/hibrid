@@ -11,9 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  *
  * In this class, we have methods for :
  *
- * Getting Symfony constraints validator
+ * Create a valid USER
  * Testing constraints on USER entity with valid data
  * Testing constraints on USER entity with missing data
+ * Testing constraints on USER entity with invalid data
+ * Testing constraints on USER entity with duplicated data
  * 
  */
 class UserEntityTest extends KernelTestCase
@@ -111,7 +113,7 @@ class UserEntityTest extends KernelTestCase
     {
         // Insert into database an user with email = 'duplicated@email.com'
         $em= self::bootkernel()->getContainer()->get('doctrine')->getManager();
-        $em->getConnection()->executeQuery("INSERT INTO user (email, first_name, last_name, password, roles, is_verified) value ('duplicated@email.com', 'testFirstName', 'testLastName', 'testPassword', '[\"toto\"]', 0)");
+        $em->getConnection()->executeQuery("INSERT INTO user (email, first_name, last_name, password, roles, is_verified) value ('duplicated@email.com', 'testFirstName', 'testLastName', 'testPassword', '[\"ROLE_ADMIN\"]', 0)");
         
         $this->getValidationErrors($this->getUser()->setEmail('duplicated@email.com'), 1);
         

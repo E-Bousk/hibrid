@@ -14,8 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  *
  * In this class, we have methods for :
  *
- * Testing public URL
- * Getting all public URi (path)
+ * Testing all public URL
+ * Getting all the public URI (paths)
  * 
  * ⚠ Need to add « defaults:['_public_access' => true] » for public route on the controllers ! ⚠
  * 
@@ -29,14 +29,14 @@ class PublicUrlSmokeTest extends WebTestCase
      *
      * @return void
      */
-    public function testPublicPagesAreSuccessfullyLoaded()
+    public function testAllPublicPagesAreSuccessfullyLoaded()
     {
         $client= $this->createClientAndFollowRedirections();
 
         $publicUri= $this->getPublicUri($client);
 
-        // $publicUri[]= '/Bad URI to test';
-        // dd($publicUri);
+        // $publicUri[]= '/unexisting-URI-to-confitm-test'; // this is to test with an unexisting URI
+        dump($publicUri); // this is to display the found URI
 
         $NumberOfPublicUri= count($publicUri);
 
@@ -55,14 +55,14 @@ class PublicUrlSmokeTest extends WebTestCase
         }
 
         if (!empty($uriNotSuccessfullyLoaded)) {
-            dump($uriNotSuccessfullyLoaded);
+            dump($uriNotSuccessfullyLoaded); // display URI not successfully loaded if any
         }
 
         $this->assertSame($NumberOfPublicUri, $numberOfSuccessfullPublicUri);
     }
 
     /**
-     * Get all public URI (path)
+     * Get all the public URI (path)
      * 
      * ⚠ Need to add « defaults:['_public_access' => true] » for public route on the controllers ! ⚠
      *
@@ -84,31 +84,31 @@ class PublicUrlSmokeTest extends WebTestCase
         }
         return $publicUri;
     }
+
+    // /**
+    //  * 
+    //  * Test public URLs
+    //  * 
+    //  * @dataProvider urlProvider
+    //  */
+    // public function testPageIsSuccessfullyLoaded($url)
+    // {
+    //     $client = self::createClient();
+    //     $client->request('GET', $url);
+
+    //     $this->assertResponseIsSuccessful();
+    // }
+
+    // /**
+    //  * Provide URLs
+    //  *
+    //  * @return void
+    //  */
+    // public function urlProvider()
+    // {
+    //     yield 'Home page' => ['/'];
+    //     yield 'Register page' =>['/register'];
+    //     yield 'Reset password page' =>['/reset-password'];
+    //     yield 'Loging page' => ['/login'];
+    // }
 }
-
-// /**
-//  * 
-//  * Test public URLs
-//  * 
-//  * @dataProvider urlProvider
-//  */
-// public function testPageIsSuccessfullyLoaded($url)
-// {
-//     $client = self::createClient();
-//     $client->request('GET', $url);
-
-//     $this->assertResponseIsSuccessful();
-// }
-
-// /**
-//  * Provide URLs
-//  *
-//  * @return void
-//  */
-// public function urlProvider()
-// {
-//     yield 'Home page' => ['/'];
-//     yield 'Register page' =>['/register'];
-//     yield 'Reset password page' =>['/reset-password'];
-//     yield 'Loging page' => ['/login'];
-// }

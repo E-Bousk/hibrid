@@ -11,9 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  *
  * In this class, we have methods for :
  *
- * Getting Symfony constraints validator
+ * Create a valid RENTAL SPACE TYPE
  * Testing constraints on RENTAL SPACE TYPE entity with valid data
  * Testing constraints on RENTAL SPACE TYPE entity with missing data
+ * Testing constraints on RENTAL SPACE TYPE entity with invalid data
  * 
  */
 class RentalSpaceTypeEntityTest extends KernelTestCase
